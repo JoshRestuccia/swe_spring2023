@@ -1,6 +1,26 @@
+.toolbar-color-scheme {
+  background-color: darkgreen;
+}
 .example-icon {
   padding: 0 14px;
 }
 .example-spacer {
   flex: 1 1 auto;
+}
+.card-text {
+  color: white;
+}
+.example-card {
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.example-card-header {
+  background-color: darkgreen;
+  color: whitesmoke;
+}
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
