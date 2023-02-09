@@ -22,7 +22,7 @@ func handleRequests() {
 
 	myRouter.HandleFunc("/users", GetUsers).Methods("GET")
 	myRouter.HandleFunc("/users/{id}", GetUser).Methods("GET")
-	myRouter.HandleFunc("/users/", CreateUser).Methods("POST")
+	myRouter.HandleFunc("/users", CreateUser).Methods("POST")
 	myRouter.HandleFunc("/users/{id}", DeleteUser).Methods("DELETE")
 	myRouter.HandleFunc("/users/{id}", UpdateUser).Methods("PUT")
 
