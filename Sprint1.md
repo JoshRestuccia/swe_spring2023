@@ -19,9 +19,12 @@ As a user, I want to receive personalized recommendations based on the stocks I 
 
 As a user, I want to be able to create an account on the app using my first name, last name and email address and have my account information stored in a database.
 
-What issues your team planned to address
+What issues your team planned to address  
+Backend: On the backend side, the team planned to create an API and a database that would be able to store information provided by users looking to use the application.
 
 Which ones were successfully completed
+Which ones were successfully completed :
+The backend team was able to complete the task, generating a database to hold the user's info, notably their first and last names as well as their email address.
 
 Which ones didn't and why?
 
