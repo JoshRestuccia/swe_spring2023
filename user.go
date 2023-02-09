@@ -11,15 +11,16 @@ import (
 	"gorm.io/gorm"
 )
 
-var DB *gorm.DB 
+var DB *gorm.DB
 var err error
-const DNS = "root:Hay8263hwa_!@tcp(127.0.0.1:3306)/portfullio?charset=utf8mb4&parseTime=True&loc=Local"
+
+const DNS = "root:admin@tcp(127.0.0.1:3306)/test?charset=utf8mb4&parseTime=True&loc=Local"
 
 type User struct {
 	gorm.Model
 	FirstName string `json:"firstname"`
-	LastName string `json:"lastname"`
-	Email string `json:"email"`
+	LastName  string `json:"lastname"`
+	Email     string `json:"email"`
 }
 
 func InitialMigration() {
@@ -71,4 +72,3 @@ func DeleteUser(w http.ResponseWriter, r *http.Request) {
 	DB.Delete(&user, params["id"])
 	json.NewEncoder(w).Encode("The user was successfully deleted")
 }
-
