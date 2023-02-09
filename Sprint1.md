@@ -15,6 +15,7 @@ As a user, I want to be able to make my own account, so that I can login from di
 As a user, I want to be able to see the stock graph that looks very similar to Google's market summary and color itself green or red depending on if it's price has increased or decrease, in order to be able to identify a stock's performance at a glance.
 
 As a user, I want to be able to input investments from different sources and be able to see the total valuation of my investments across all my accounts.
+
 As a user, I want to receive personalized recommendations based on the stocks I currently have in my portfolio.
 
 As a user, I want to be able to create an account on the app using my first name, last name and email address and have my account information stored in a database.
