@@ -20,15 +20,15 @@ As a user, I want to receive personalized recommendations based on the stocks I 
 
 As a user, I want to be able to create an account on the app using my first name, last name and email address and have my account information stored in a database.
 
-What issues your team planned to address:  
+**What issues your team planned to address:**
 Backend: On the backend side, the team planned to create an API and a database that would be able to store information provided by users looking to use the application.
 Frontend: On the frontend side, the team wanted to get a basic user interface established to view in order to better establish how we want the rest of the webpage to be formatted moving forward.
 
-Which ones were successfully completed:  
+**Which ones were successfully completed:**
 The backend team was able to complete the task, generating a database table to hold the user's info, notably their first and last names as well as their email address. Another table was also created to store information about different stocks that the user would input into the application.
 The frontend team was able to complete a basic user interface containing a toolbar, card that contains an image, and a simple dropdown in the top right corner that displays two buttons for login and settings.
 
-Which ones didn't and why?  
+**Which ones didn't and why?** 
 The rest of the issues were not completed as they all required the API and database to be completed first. The rest of the issues will be handled in future sprints.
 
 Frontend video link: https://youtu.be/mAXggn3Ga0o
