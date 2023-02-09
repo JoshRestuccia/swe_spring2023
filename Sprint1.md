@@ -1,6 +1,7 @@
 # Sprint1
 
-User stories
+### User stories
+
 As an investor, I want to be able to see which stocks I have investments in first, so that it is easier for me to check on my investments.  
 
 As an investor, I want to receive a notification if a threshold of either value or percentage is crossed, so that I can know if I need to either buy or sell my investment  
