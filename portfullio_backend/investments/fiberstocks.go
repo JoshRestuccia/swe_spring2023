@@ -1,4 +1,4 @@
-package fiberstocks
+package stocks
 
 import (
 	"github.com/gofiber/fiber/v2"
