@@ -8,7 +8,6 @@ import (
 	"github.com/gorilla/mux"
 )
 
-
 func homePage(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Homepage Endpoint Hit")
 }
