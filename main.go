@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/JoshRestuccia/swe_spring2023/user"
+	"github.com/JoshRestuccia/swe_spring2023/investments"
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -11,17 +11,17 @@ func hello(c *fiber.Ctx) error {
 }
 
 func Routers(app *fiber.App) {
-	app.Get("/users", user.GetUsers)
-	app.Get("/users/:id", user.GetUser)
-	app.Post("/user", user.SaveUser)
-	app.Delete("/user/:id", user.DeleteUser)
-	app.Put("/user/:id", user.UpdateUser)
+	app.Get("/users", investments.GetUsers)
+	app.Get("/users/:id", investments.GetUser)
+	app.Post("/user", investments.SaveUser)
+	app.Delete("/user/:id", investments.DeleteUser)
+	app.Put("/user/:id", investments.UpdateUser)
 
 }
 
 func main() {
 
-	user.InitialMigration()
+	investments.InitialMigration()
 	app := fiber.New()
 
 	app.Get("/", hello)
