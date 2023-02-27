@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/Carlfred3010/goApp/user"
+	"github.com/JoshRestuccia/swe_spring2023/portfullio_backend/user"
 	"github.com/gofiber/fiber/v2"
 )
 
