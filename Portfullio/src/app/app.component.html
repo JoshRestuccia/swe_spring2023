@@ -1,4 +1,15 @@
 <p>
+  <!--This code was an attempt to make the entire button work to navigate to another page-->
+  <!-- <script>
+    function goMainpage() {
+      <nav>
+        <a routerLink="/mainpage"></a>;
+      </nav>;
+    }
+    function goLogin() {
+      <a routerLink="/login"></a>;
+    }
+  </script> -->
   <mat-toolbar class="toolbar-color-scheme" color="primary">
     <mat-toolbar-row>
       <span>Portfullio</span>
@@ -12,39 +23,25 @@
         <mat-icon>reorder</mat-icon>
       </button>
       <mat-menu #menu="matMenu">
-        <button mat-menu-item>
+        <button type="button" mat-menu-item>
           <mat-icon>person</mat-icon>
-          <span>Login</span>
+          <nav>
+            <a routerLink="/login"><span>Login</span></a>
+          </nav>
         </button>
-        <button mat-menu-item>
+        <button type="button" mat-menu-item>
           <mat-icon>settings</mat-icon>
           <span>Settings</span>
+        </button>
+        <button type="button" mat-menu-item>
+          <mat-icon>home</mat-icon>
+          <nav>
+            <a routerLink="/mainpage"><span>Home</span></a>
+          </nav>
         </button>
       </mat-menu>
     </mat-toolbar-row>
   </mat-toolbar>
-
   <br />
-
-  <mat-card class="example-card">
-    <mat-card-header class="example-card-header">
-      <mat-card-title>Portfullio</mat-card-title>
-      <mat-card-subtitle class="card-text"
-        >Quick access to your "Full" inverstment portfolio, from company shares
-        to your 401k
-
-        <br />
-      </mat-card-subtitle>
-    </mat-card-header>
-
-    <br />
-
-    <img
-      mat-card-xl-image
-      src="https://media.istockphoto.com/id/1153657433/vector/digital-analytics-data-visualization-financial-schedule-monitor-screen-in-perspective.jpg?s=612x612&w=0&k=20&c=x6_oPFtSLL7foLpSBWQIB9mR1vXVda-PEpGVanAbJ7M="
-      class="center"
-    />
-
-    <br />
-  </mat-card>
+  <router-outlet></router-outlet>;
 </p>
