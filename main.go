@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/JoshRestuccia/swe_spring2023/user"
 	"github.com/gofiber/fiber/v2"
 )
 
