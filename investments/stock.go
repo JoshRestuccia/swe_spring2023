@@ -98,6 +98,26 @@ func DeleteStock(c *fiber.Ctx) error {
 
 }
 
+func DeleteStocks(c *fiber.Ctx) error {
+
+	//removes a single stock from a user's portfolio
+
+	var user_refer = c.Params("user_refer")
+
+	u64, err := strconv.ParseUint(user_refer, 10, 32)
+	if err != nil {
+		fmt.Println(err.Error())
+
+	}
+	wd := uint(u64)
+	var stock Stock
+	DB.Where("user_refer=?", wd).Delete(&stock)
+
+	//DB.Delete(&stock).Where("user_refer=?", wd).Where("symbol=?", symbol).Find(&stock)
+	return c.SendString("Stock deleted")
+
+}
+
 func UpdateStock(c *fiber.Ctx) error {
 
 	//updates a stock
