@@ -1,12 +1,3 @@
-.toolbar-color-scheme {
-  background-color: darkgreen;
-}
-.example-icon {
-  padding: 0 14px;
-}
-.example-spacer {
-  flex: 1 1 auto;
-}
 .card-text {
   color: white;
 }
@@ -24,4 +15,3 @@
   margin-left: auto;
   margin-right: auto;
 }
-/* classes for components in the webpage */
