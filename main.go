@@ -22,7 +22,7 @@ func Routers(app *fiber.App) {
 	//End of user routes
 
 	app.Get("/stocks/:user_refer", investments.GetStocks)
-	app.Post("/stocks", investments.SaveStock)
+	app.Post("/stocks/:user_refer", investments.SaveStock) //changed from "/stocks" to "stocks/:user_refer since it seems like we are storing stock-user pairs and we need the user_refer for that"
 	app.Delete("/stocks/:user_refer/:symbol", investments.DeleteStock)
 	app.Delete("/stocks/:user_refer", investments.DeleteStocks)
 	app.Put("/stocks/:user_refer", investments.UpdateStock) //TODO: implement update stock
