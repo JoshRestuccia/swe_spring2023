@@ -16,9 +16,9 @@ func Routers(app *fiber.App) {
 	app.Get("/users/:id/stocks", investments.GetUsersStocks)
 	app.Get("users/:id/total", investments.GetUsersTotal)
 
-	app.Post("/user", investments.SaveUser)
-	app.Delete("/user/:id", investments.DeleteUser)
-	app.Put("/user/:id", investments.UpdateUser)
+	app.Post("/users", investments.SaveUser)
+	app.Delete("/users/:id", investments.DeleteUser)
+	app.Put("/users/:id", investments.UpdateUser)
 	//End of user routes
 
 	app.Get("/stocks/:user_refer", investments.GetStocks)
