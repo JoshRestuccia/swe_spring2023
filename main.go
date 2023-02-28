@@ -20,7 +20,7 @@ func Routers(app *fiber.App) {
 
 	app.Get("/stocks/:user_refer", investments.GetStocks)
 	app.Post("/stock", investments.SaveStock)
-	app.Delete("/stock/:user_refer/:symbol", investments.DeleteStock) //todo: implement delete stock
+	app.Delete("/stock/:user_refer/:symbol", investments.DeleteStock)
 
 	app.Put("/stock/:user_refer", investments.UpdateStock) //todo: implement update stock
 
