@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Login } from '../Login';
 @Component({
@@ -6,6 +7,11 @@ import { Login } from '../Login';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
+  public getJsonValue: any;
+  public postJsonValue: any;
+  constructor (private http: HttpClient) {
+
+  }
   login: Login = {
     username: '',
     password: '',
