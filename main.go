@@ -22,6 +22,7 @@ func Routers(app *fiber.App) {
 func main() {
 
 	investments.InitialMigration()
+	investments.MigrateStocks()
 	app := fiber.New()
 
 	app.Get("/", hello)

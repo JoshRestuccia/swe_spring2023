@@ -19,7 +19,11 @@ type User struct {
 	LastName  string `json:"lastname"`
 	Email     string `json:"email"`
 	Password  string `json:"password"`
+	// Stocksref []string `json:"stocksref"`
+	// Stocks    []Stock  `gorm:"foreignKey:StockRef;constraint:OnDelete:CASCADE,OnDelete:SET NULL;"`
 }
+
+//var stocks[] Stock
 
 func InitialMigration() {
 	DB, err = gorm.Open(mysql.Open(DNS), &gorm.Config{})
