@@ -65,7 +65,7 @@ func GetStocks(c *fiber.Ctx) error {
 }
 
 func SaveStock(c *fiber.Ctx) error {
-
+	//Should be added to add stock with user_refer
 	//adds a new stock
 	stock := new(Stock)
 	if err := c.BodyParser(stock); err != nil {
