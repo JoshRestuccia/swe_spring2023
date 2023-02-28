@@ -52,6 +52,10 @@ func GetStocks(c *fiber.Ctx) error {
 	wd := uint(u64)
 	var stocks []Stock
 	DB.Find(&stocks, "user_refer=?", wd)
+	for i := range stocks {
+		stocks[i].User = FindUser(wd, &stocks[i].User)
+
+	}
 	return c.JSON(&stocks)
 
 }
@@ -75,7 +79,7 @@ func SaveStock(c *fiber.Ctx) error {
 
 func DeleteStock(c *fiber.Ctx) error {
 
-	//removes a stock
+	//removes a single stock from a user's portfolio
 
 	var user_refer = c.Params("user_refer")
 	var symbol = c.Params("symbol")
@@ -87,12 +91,9 @@ func DeleteStock(c *fiber.Ctx) error {
 	}
 	wd := uint(u64)
 	var stock Stock
-	DB.Find(&stock, "user_refer=?", wd, "symbol=?", symbol)
-	if stock.Symbol == "" {
-		return c.Status(500).SendString("Stock not found")
-	}
+	DB.Where("user_refer=?", wd).Where("symbol=?", symbol).Delete(&stock)
 
-	DB.Delete(&stock)
+	//DB.Delete(&stock).Where("user_refer=?", wd).Where("symbol=?", symbol).Find(&stock)
 	return c.SendString("Stock deleted")
 
 }
