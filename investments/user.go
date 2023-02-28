@@ -15,11 +15,10 @@ const DNS = "root:admin@tcp(127.0.0.1:3306)/portfullio?charset=utf8mb4&parseTime
 
 type User struct {
 	gorm.Model
-	FirstName string `json:"firstname"`
-	LastName  string `json:"lastname"`
-	Email     string `json:"email"`
-	Password  string `json:"password"`
-	// Stocksref []string `json:"stocksref"`
+	Username string `json:"username"`
+	Email    string `json:"email"`
+	Password string `json:"password"`
+	//Stocksref []*string `json:"stocksref"`
 	// Stocks    []Stock  `gorm:"foreignKey:StockRef;constraint:OnDelete:CASCADE,OnDelete:SET NULL;"`
 }
 
@@ -72,6 +71,15 @@ func DeleteUser(c *fiber.Ctx) error {
 	return c.SendString("User is deleted")
 
 }
+
+// func FindUser(id int, user * User) error {
+// 	DB.Find(&user, "id =?", id)
+// 	if user.ID ==0{
+// 		return errors.New("User not found")
+
+// 	}
+// 	return nil
+// }
 
 func UpdateUser(c *fiber.Ctx) error {
 	id := c.Params("id")

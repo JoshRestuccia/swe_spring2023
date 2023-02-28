@@ -17,6 +17,12 @@ func Routers(app *fiber.App) {
 	app.Delete("/user/:id", investments.DeleteUser)
 	app.Put("/user/:id", investments.UpdateUser)
 
+	app.Get("/stocks", investments.GetStocks)
+	app.Get("/stocks/:symbol", investments.GetStock)
+	app.Post("/stock", investments.SaveStock)
+	app.Delete("/stock/:symbol", investments.DeleteStock)
+	app.Put("/stock/:symbol", investments.UpdateStock)
+
 }
 
 func main() {
