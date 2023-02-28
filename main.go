@@ -16,19 +16,24 @@ func Routers(app *fiber.App) {
 	app.Post("/user", investments.SaveUser)
 	app.Delete("/user/:id", investments.DeleteUser)
 	app.Put("/user/:id", investments.UpdateUser)
+	//End of user routes
 
-	app.Get("/stocks", investments.GetStocks)
-	app.Get("/stocks/:symbol", investments.GetStock)
+	app.Get("/stocks/:user_refer", investments.GetStocks)
 	app.Post("/stock", investments.SaveStock)
-	app.Delete("/stock/:symbol", investments.DeleteStock)
-	app.Put("/stock/:symbol", investments.UpdateStock)
+	app.Delete("/stock/:user_refer/:symbol", investments.DeleteStock) //todo: implement delete stock
+
+	app.Put("/stock/:user_refer", investments.UpdateStock) //todo: implement update stock
+
+	//End of stock routes
 
 }
 
 func main() {
-
+	//Initialize databse tables
 	investments.InitialMigration()
 	investments.MigrateStocks()
+	//Initialize Fiber
+
 	app := fiber.New()
 
 	app.Get("/", hello)
