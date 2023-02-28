@@ -129,15 +129,6 @@ func DeleteUser(c *fiber.Ctx) error {
 
 }
 
-// func FindUser(id int, user * User) error {
-// 	DB.Find(&user, "id =?", id)
-// 	if user.ID ==0{
-// 		return errors.New("User not found")
-
-// 	}
-// 	return nil
-// }
-
 func UpdateUser(c *fiber.Ctx) error {
 
 	//update a user
