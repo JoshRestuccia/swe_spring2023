@@ -14,6 +14,8 @@ var err error
 const DNS = "root:admin@tcp(127.0.0.1:3306)/portfullio?charset=utf8mb4&parseTime=True&loc=Local"
 
 type User struct {
+	//Create User structure
+
 	gorm.Model
 	Username string `json:"username"`
 	Email    string `json:"email"`
@@ -25,6 +27,7 @@ type User struct {
 //var stocks[] Stock
 
 func InitialMigration() {
+	//Create user table
 	DB, err = gorm.Open(mysql.Open(DNS), &gorm.Config{})
 	if err != nil {
 		fmt.Println(err.Error())
@@ -35,6 +38,9 @@ func InitialMigration() {
 }
 
 func GetUsers(c *fiber.Ctx) error {
+
+	// return all users
+
 	var users []User
 	DB.Find(&users)
 	return c.JSON(&users)
@@ -42,6 +48,8 @@ func GetUsers(c *fiber.Ctx) error {
 }
 
 func GetUser(c *fiber.Ctx) error {
+	//return single user
+
 	id := c.Params("id")
 	var user User
 	DB.Find(&user, id)
@@ -50,6 +58,8 @@ func GetUser(c *fiber.Ctx) error {
 }
 
 func SaveUser(c *fiber.Ctx) error {
+	//add a new user
+
 	user := new(User)
 	if err := c.BodyParser(user); err != nil {
 		return c.Status(500).SendString(err.Error())
@@ -60,6 +70,8 @@ func SaveUser(c *fiber.Ctx) error {
 }
 
 func DeleteUser(c *fiber.Ctx) error {
+	//remove a user
+
 	id := c.Params("id")
 	var user User
 	DB.First(&user, id)
@@ -82,11 +94,14 @@ func DeleteUser(c *fiber.Ctx) error {
 // }
 
 func UpdateUser(c *fiber.Ctx) error {
+
+	//update a user
+
 	id := c.Params("id")
 
 	user := new(User)
 	DB.First(&user, id)
-	if user.Email == "" {
+	if user.Username == "" {
 		return c.Status(500).SendString("User not found")
 	}
 

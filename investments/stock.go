@@ -2,6 +2,7 @@ package investments
 
 import (
 	"fmt"
+	"strconv"
 
 	"github.com/gofiber/fiber/v2"
 	"gorm.io/driver/mysql"
@@ -17,6 +18,7 @@ type Stock struct {
 }
 
 func MigrateStocks() {
+	//initialize stock table
 
 	DB, err = gorm.Open(mysql.Open(DNS), &gorm.Config{})
 	if err != nil {
@@ -27,6 +29,8 @@ func MigrateStocks() {
 }
 
 func FindUser(id uint, user *User) User {
+	//finds the user who has the stock we are trying to add
+
 	DB.Find(&user, "id =?", id)
 
 	if user.ID == id {
@@ -36,24 +40,25 @@ func FindUser(id uint, user *User) User {
 }
 
 func GetStocks(c *fiber.Ctx) error {
+
+	//returns all stocks of a given user
+
+	var user_refer = c.Params("user_refer")
+	u64, err := strconv.ParseUint(user_refer, 10, 32)
+	if err != nil {
+		fmt.Println(err.Error())
+
+	}
+	wd := uint(u64)
 	var stocks []Stock
-	DB.Find(&stocks)
+	DB.Find(&stocks, "user_refer=?", wd)
 	return c.JSON(&stocks)
 
 }
 
-func GetStock(c *fiber.Ctx) error {
-	symbol := c.Params("symbol")
-	user := c.Params("userRefer")
-	var stock Stock
-
-	DB.Find(&stock, user, symbol)
-
-	return c.JSON(&stock)
-
-}
-
 func SaveStock(c *fiber.Ctx) error {
+
+	//adds a new stock
 	stock := new(Stock)
 	if err := c.BodyParser(stock); err != nil {
 		return c.Status(500).SendString(err.Error())
@@ -69,10 +74,20 @@ func SaveStock(c *fiber.Ctx) error {
 }
 
 func DeleteStock(c *fiber.Ctx) error {
-	symbol := c.Params("symbol")
-	user := c.Params("userRefer")
+
+	//removes a stock
+
+	var user_refer = c.Params("user_refer")
+	var symbol = c.Params("symbol")
+
+	u64, err := strconv.ParseUint(user_refer, 10, 32)
+	if err != nil {
+		fmt.Println(err.Error())
+
+	}
+	wd := uint(u64)
 	var stock Stock
-	DB.First(&stock, user, symbol)
+	DB.Find(&stock, "user_refer=?", wd, "symbol=?", symbol)
 	if stock.Symbol == "" {
 		return c.Status(500).SendString("Stock not found")
 	}
@@ -83,6 +98,9 @@ func DeleteStock(c *fiber.Ctx) error {
 }
 
 func UpdateStock(c *fiber.Ctx) error {
+
+	//updates a stock
+
 	symbol := c.Params("symbol")
 	user := c.Params("userRefer")
 	stock := new(Stock)
