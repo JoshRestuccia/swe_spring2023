@@ -13,7 +13,7 @@ type Stock struct {
 	Symbol    string  `json:"symbol"`
 	Name      string  `json:"name"`
 	Price     float64 `json:"price"`
-	Quantity  int     `json:"quantity"`
+	Quantity  int     `json:"quantity" gorm:"default:1"`
 	UserRefer uint    `json:"userRefer"`
 	User      User    `gorm:"foreignKey:UserRefer"`
 }

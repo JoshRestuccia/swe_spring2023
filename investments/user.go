@@ -2,6 +2,7 @@ package investments
 
 import (
 	"fmt"
+	"strconv"
 
 	"github.com/gofiber/fiber/v2"
 	"gorm.io/driver/mysql"
@@ -45,6 +46,50 @@ func GetUsers(c *fiber.Ctx) error {
 	DB.Find(&users)
 	return c.JSON(&users)
 
+}
+
+func GetUsersStocks(c *fiber.Ctx) error {
+	id := c.Params("id")
+	u64, err := strconv.ParseUint(id, 10, 32)
+	//convert to uint
+	if err != nil {
+		fmt.Println(err.Error())
+
+	}
+	wd := uint(u64)
+	var stocks []Stock
+	var names []string
+
+	//find all stocks matching the user id
+	DB.Find(&stocks, "user_refer=?", wd)
+	for i := range stocks {
+		names = append(names, stocks[i].Name)
+	}
+	return c.JSON(&names)
+
+}
+
+func GetUsersTotal(c *fiber.Ctx) error {
+	//returns total value of all stocks owned by the user
+
+	id := c.Params("id")
+	u64, err := strconv.ParseUint(id, 10, 32)
+	//convert to uint
+	if err != nil {
+		fmt.Println(err.Error())
+
+	}
+	wd := uint(u64)
+	var stocks []Stock
+	var total float64
+
+	//find all stocks matching the user id
+	DB.Find(&stocks, "user_refer=?", wd)
+	for i := range stocks {
+		total += float64(stocks[i].Quantity) * stocks[i].Price
+
+	}
+	return c.JSON(&total)
 }
 
 func GetUser(c *fiber.Ctx) error {
