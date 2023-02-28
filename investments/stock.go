@@ -45,13 +45,16 @@ func GetStocks(c *fiber.Ctx) error {
 	//returns all stocks of a given user
 
 	var user_refer = c.Params("user_refer")
+	//get the user id number as a string
 	u64, err := strconv.ParseUint(user_refer, 10, 32)
+	//convert to uint
 	if err != nil {
 		fmt.Println(err.Error())
 
 	}
 	wd := uint(u64)
 	var stocks []Stock
+	//find all stocks matching the user id
 	DB.Find(&stocks, "user_refer=?", wd)
 	for i := range stocks {
 		stocks[i].User = FindUser(wd, &stocks[i].User)
@@ -84,17 +87,20 @@ func DeleteStock(c *fiber.Ctx) error {
 
 	var user_refer = c.Params("user_refer")
 	var symbol = c.Params("symbol")
+	// get the user id number and stock symbol as strings
 
 	u64, err := strconv.ParseUint(user_refer, 10, 32)
+	//convert id to uint
+
 	if err != nil {
 		fmt.Println(err.Error())
 
 	}
 	wd := uint(u64)
 	var stock Stock
+	//delete stocks matching the user id and stock symbol
 	DB.Where("user_refer=?", wd).Where("symbol=?", symbol).Delete(&stock)
 
-	//DB.Delete(&stock).Where("user_refer=?", wd).Where("symbol=?", symbol).Find(&stock)
 	return c.SendString("Stock deleted")
 
 }
@@ -102,6 +108,7 @@ func DeleteStock(c *fiber.Ctx) error {
 func DeleteStocks(c *fiber.Ctx) error {
 
 	//removes a single stock from a user's portfolio
+	//same logic as DeleteStock() but no symbol parameter
 
 	var user_refer = c.Params("user_refer")
 
