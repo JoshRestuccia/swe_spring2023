@@ -130,9 +130,9 @@ func UpdateStock(c *fiber.Ctx) error {
 	//updates a stock
 
 	symbol := c.Params("symbol")
-	user := c.Params("userRefer")
+	user := c.Params("user_refer")
 	stock := new(Stock)
-	DB.First(&stock, symbol, user)
+	DB.Where("symbol=?", symbol).Where("user_refer=?", user).Find(&stock)
 	if stock.Symbol == "" {
 		return c.Status(500).SendString("Stock not found")
 
@@ -141,6 +141,22 @@ func UpdateStock(c *fiber.Ctx) error {
 	if err := c.BodyParser(stock); err != nil {
 		return c.Status(500).SendString(err.Error())
 	}
+	type UpdateStock struct {
+		Symbol    string  `json:"symbol"`
+		Name      string  `json:"name"`
+		Price     float64 `json:"price"`
+		Quantity  int     `json:"quantity" gorm:"default:1"`
+		UserRefer uint    `json:"user_refer"`
+	}
+
+	var updatedInfo UpdateStock
+	if err := c.BodyParser(updatedInfo); err != nil {
+		return c.Status(500).JSON(err.Error())
+	}
+	stock.Symbol = updatedInfo.Symbol
+	stock.Name = updatedInfo.Name
+	stock.Quantity = updatedInfo.Quantity
+	stock.Price = updatedInfo.Price
 
 	DB.Save(&stock)
 
