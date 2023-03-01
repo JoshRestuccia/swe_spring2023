@@ -15,7 +15,7 @@ type Stock struct {
 	Price     float64 `json:"price"`
 	Quantity  int     `json:"quantity" gorm:"default:1"`
 	UserRefer uint    `json:"userRefer"`
-	User      User    `gorm:"foreignKey:UserRefer"`
+	//	User      User    `gorm:"foreignKey:UserRefer"`
 }
 
 func MigrateStocks() {
@@ -56,10 +56,10 @@ func GetStocks(c *fiber.Ctx) error {
 	var stocks []Stock
 	//find all stocks matching the user id
 	DB.Find(&stocks, "user_refer=?", wd)
-	for i := range stocks {
-		stocks[i].User = FindUser(wd, &stocks[i].User)
+	// for i := range stocks {
+	// 	stocks[i].User = FindUser(wd, &stocks[i].User)
 
-	}
+	// }
 	return c.JSON(&stocks)
 
 }
@@ -72,10 +72,10 @@ func SaveStock(c *fiber.Ctx) error {
 		return c.Status(500).SendString(err.Error())
 	}
 
-	var user User
+	//var user User
 
 	DB.Create(&stock)
-	stock.User = FindUser(stock.UserRefer, &user)
+	//stock.User = FindUser(stock.UserRefer, &user)
 
 	return c.JSON(&stock)
 
@@ -107,7 +107,6 @@ func DeleteStock(c *fiber.Ctx) error {
 
 func DeleteStocks(c *fiber.Ctx) error {
 
-	//removes a single stock from a user's portfolio
 	//same logic as DeleteStock() but no symbol parameter
 
 	var user_refer = c.Params("user_refer")
