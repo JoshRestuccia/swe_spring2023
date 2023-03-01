@@ -142,11 +142,10 @@ func UpdateStock(c *fiber.Ctx) error {
 		return c.Status(500).SendString(err.Error())
 	}
 	type UpdateStock struct {
-		Symbol    string  `json:"symbol"`
-		Name      string  `json:"name"`
-		Price     float64 `json:"price"`
-		Quantity  int     `json:"quantity" gorm:"default:1"`
-		UserRefer uint    `json:"user_refer"`
+		Symbol   string  `json:"symbol"`
+		Name     string  `json:"name"`
+		Price    float64 `json:"price"`
+		Quantity int     `json:"quantity" gorm:"default:1"`
 	}
 
 	var updatedInfo UpdateStock
