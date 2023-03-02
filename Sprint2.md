@@ -10,6 +10,14 @@ Frontend work completed in Sprint 2:
 	
 	Added cypress testing on web functionality
 
+Cypress Tests:
+	>the homepage loads
+	>the button in the top right of the homepage properly fucntions
+	>the first link of the dropdown from the button functions
+	>the input boxes for the username and password function
+	>the link back to the homepage from the button dropdown menu functions
+	>the settings button from the dropdown is clickable (no functionality yet)
+
 ## Backend
 
 ### API Documentation
