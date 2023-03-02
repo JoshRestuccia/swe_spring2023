@@ -7,6 +7,8 @@ Frontend work completed in Sprint 2:
 	
 	Added an additional login page.
 		Added 2 input boxes to allow the user to enter their username and password
+	
+	Added cypress testing on web functionality
 
 ## Backend
 
