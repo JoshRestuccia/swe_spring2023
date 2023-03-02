@@ -20,6 +20,7 @@ Cypress Tests:
 	>the settings button from the dropdown is clickable (no functionality yet)
 
 ## Backend
+During sprint 2, we created more endpoints on the backend to link investments with users by creating a stock-user table to store the pairs. We also created documentation using Postman to describe each endpoint and how to use them
 
 ### API Documentation
 
