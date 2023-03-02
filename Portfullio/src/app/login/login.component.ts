@@ -6,20 +6,22 @@ import { Login} from '../Login';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
+
 export class LoginComponent implements OnInit {
+
+  // class Profile {
+  //   userName: string; 
+  //   constructor(message: string) {
+  //     this.userName = message
+  //   }
+  // }
   public password: any;
   public username: any;
-
-  userNamee: string;
-
-  constructor(private http: HttpClient) {
-    this.userNamee = 'OliverP';
-  }
-
+  public user:string = "OliverP";
   ngOnInit(): void {
     fetch('localhost:3000/users/')
       .then((response) => response.json())
-      .then((quotesData) => (this.userNamee = quotesData));
+      .then((quotesData) => (this.user = quotesData));
   }
   login: Login = {
     username: '',
