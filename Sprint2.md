@@ -1,5 +1,7 @@
 # Sprint 2
 
+Video: https://youtu.be/eZNw3jBz_Js
+
 ## Frontend
 Frontend work completed in Sprint 2:
 
