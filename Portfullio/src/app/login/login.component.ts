@@ -7,12 +7,12 @@ import { Login} from '../Login';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-  public getJsonValue: any;
-  public postJsonValue: any;
+  public password: any;
+  public username: any;
 
   userNamee: string;
 
-  constructor() {
+  constructor(private http: HttpClient) {
     this.userNamee = 'OliverP';
   }
 
@@ -21,5 +21,9 @@ export class LoginComponent implements OnInit {
       .then((response) => response.json())
       .then((quotesData) => (this.userNamee = quotesData));
   }
+  login: Login = {
+    username: '',
+    password: '',
+  };
 }
 // This entire component is to help the navigate the website to the login page
