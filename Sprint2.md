@@ -11,6 +11,7 @@ Frontend work completed in Sprint 2:
 	Added cypress testing on web functionality
 
 Cypress Tests:
+
 	>the homepage loads
 	>the button in the top right of the homepage properly fucntions
 	>the first link of the dropdown from the button functions
