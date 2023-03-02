@@ -40,6 +40,10 @@ func FindUser(id uint, user *User) User {
 	return User{}
 }
 
+func CreateResponseStock(stock Stock) Stock {
+	return Stock{Symbol: stock.Symbol, Name: stock.Name, Price: stock.Price, Quantity: stock.Quantity, UserRefer: stock.UserRefer}
+}
+
 func GetStocks(c *fiber.Ctx) error {
 
 	//returns all stocks of a given user
@@ -131,7 +135,8 @@ func UpdateStock(c *fiber.Ctx) error {
 
 	symbol := c.Params("symbol")
 	user := c.Params("user_refer")
-	stock := new(Stock)
+	var stock Stock
+
 	DB.Where("symbol=?", symbol).Where("user_refer=?", user).Find(&stock)
 	if stock.Symbol == "" {
 		return c.Status(500).SendString("Stock not found")
@@ -159,6 +164,8 @@ func UpdateStock(c *fiber.Ctx) error {
 
 	DB.Save(&stock)
 
-	return c.JSON(&stock)
+	NewStock := CreateResponseStock(stock)
+
+	return c.Status(200).JSON(NewStock)
 
 }
