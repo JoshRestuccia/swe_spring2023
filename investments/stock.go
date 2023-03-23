@@ -103,7 +103,7 @@ func DeleteStock(c *fiber.Ctx) error {
 	wd := uint(u64)
 	var stock Stock
 	//delete stocks matching the user id and stock symbol
-	DB.Where("user_refer=?", wd).Where("symbol=?", symbol).Delete(&stock)
+	DB.Where("user_refer=?", wd).Where("symbol=?", symbol).Unscoped().Delete(&stock)
 
 	return c.SendString("Stock deleted")
 
