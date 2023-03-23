@@ -1,6 +1,7 @@
 package investments
 
 import (
+	"errors"
 	"fmt"
 	"strconv"
 
@@ -129,6 +130,19 @@ func DeleteStocks(c *fiber.Ctx) error {
 
 }
 
+func findStock(symbol string, id uint, stock Stock) error {
+	DB.Where("symbol=?", symbol).Where("user_refer=?", id).Find(&stock)
+	if stock.Symbol == "" {
+		return errors.New("Stock not found")
+	}
+	return nil
+}
+
+func ReturnStock(symbol string, id uint, stock Stock) Stock {
+	DB.Where("symbol=?", symbol).Where("user_refer=?", id).Find(&stock)
+	return stock
+}
+
 func UpdateStock(c *fiber.Ctx) error {
 
 	//updates a stock
@@ -136,16 +150,24 @@ func UpdateStock(c *fiber.Ctx) error {
 	symbol := c.Params("symbol")
 	user := c.Params("user_refer")
 	var stock Stock
+	u64, er := strconv.ParseUint(user, 10, 32)
+	//convert to uint
+	if er != nil {
+		fmt.Println(er.Error())
 
-	DB.Where("symbol=?", symbol).Where("user_refer=?", user).Find(&stock)
-	if stock.Symbol == "" {
+	}
+	wd := uint(u64)
+
+	err := findStock(symbol, wd, stock)
+	stock = ReturnStock(symbol, wd, stock)
+	if err != nil {
 		return c.Status(500).SendString("Stock not found")
 
 	}
 
-	if err := c.BodyParser(stock); err != nil {
-		return c.Status(500).SendString(err.Error())
-	}
+	// if err := c.BodyParser(stock); err != nil {
+	// 	return c.Status(500).SendString("Something went wrong")
+	// }
 	type UpdateStock struct {
 		Symbol   string  `json:"symbol"`
 		Name     string  `json:"name"`
@@ -153,19 +175,19 @@ func UpdateStock(c *fiber.Ctx) error {
 		Quantity int     `json:"quantity" gorm:"default:1"`
 	}
 
-	var updatedInfo UpdateStock
+	updatedInfo := new(UpdateStock)
 	if err := c.BodyParser(updatedInfo); err != nil {
-		return c.Status(500).JSON(err.Error())
+		return c.Status(500).JSON("Can't create new stock")
 	}
 	stock.Symbol = updatedInfo.Symbol
 	stock.Name = updatedInfo.Name
 	stock.Quantity = updatedInfo.Quantity
 	stock.Price = updatedInfo.Price
 
-	DB.Save(&stock)
+	DB.Where("symbol=?", symbol).Where("user_refer=?", user).Save(&stock)
 
-	NewStock := CreateResponseStock(stock)
+	//NewStock := CreateResponseStock(stock)
 
-	return c.Status(200).JSON(NewStock)
+	return c.Status(200).JSON(&stock)
 
 }
