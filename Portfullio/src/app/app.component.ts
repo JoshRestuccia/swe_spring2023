@@ -6,13 +6,18 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
+
 export class AppComponent implements OnInit {
-  title = 'Portfullio';
-  private url: string = 'https://type.fit/api/quotes';
+  title = "Portfullio";
+  userNamee: string;
+
+  constructor() {
+    this.userNamee = 'OliverP';
+  }
 
   ngOnInit(): void {
-    fetch(this.url)
-    .then((response) => response.json()) 
-    .then(console.log);
+    fetch('localhost:3000/users/')
+      .then((response) => response.json())
+      .then((quotesData) => (this.userNamee = quotesData));
   }
 }
