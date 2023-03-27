@@ -15,6 +15,7 @@ type Stock struct {
 	Name      string  `json:"name"`
 	Price     float64 `json:"price"`
 	Quantity  int     `json:"quantity" gorm:"default:1"`
+	Favorite  bool    `json:"favorite" gorm:"default:false"`
 	UserRefer uint    `json:"userRefer"`
 	//	User      User    `gorm:"foreignKey:UserRefer"`
 }
@@ -61,11 +62,25 @@ func GetStocks(c *fiber.Ctx) error {
 	var stocks []Stock
 	//find all stocks matching the user id
 	DB.Find(&stocks, "user_refer=?", wd)
-	// for i := range stocks {
-	// 	stocks[i].User = FindUser(wd, &stocks[i].User)
 
-	// }
 	return c.JSON(&stocks)
+
+}
+
+func GetStock(c *fiber.Ctx) error {
+	var user_refer = c.Params("user_refer")
+	var symbol = c.Params("symbol")
+	u64, err := strconv.ParseUint(user_refer, 10, 32)
+	//convert id to uint
+
+	if err != nil {
+		fmt.Println(err.Error())
+
+	}
+	wd := uint(u64)
+	var stock Stock
+	DB.Where("user_refer=?", wd).Where("symbol=?", symbol).Find(&stock)
+	return c.JSON(&stock)
 
 }
 
@@ -143,6 +158,11 @@ func ReturnStock(symbol string, id uint, stock Stock) Stock {
 	return stock
 }
 
+func GetFavs(id uint, stock []Stock) []Stock {
+	DB.Where("user_refer=?", id).Find(&stock)
+	return stock
+}
+
 func UpdateStock(c *fiber.Ctx) error {
 
 	//updates a stock
@@ -165,9 +185,6 @@ func UpdateStock(c *fiber.Ctx) error {
 
 	}
 
-	// if err := c.BodyParser(stock); err != nil {
-	// 	return c.Status(500).SendString("Something went wrong")
-	// }
 	type UpdateStock struct {
 		Symbol   string  `json:"symbol"`
 		Name     string  `json:"name"`
@@ -186,8 +203,61 @@ func UpdateStock(c *fiber.Ctx) error {
 
 	DB.Where("symbol=?", symbol).Where("user_refer=?", user).Save(&stock)
 
-	//NewStock := CreateResponseStock(stock)
+	return c.Status(200).JSON(&stock)
+
+}
+
+func FavoriteStock(c *fiber.Ctx) error {
+	symbol := c.Params("symbol")
+	user := c.Params("user_refer")
+	var stock Stock
+	u64, er := strconv.ParseUint(user, 10, 32)
+	//convert to uint
+	if er != nil {
+		fmt.Println(er.Error())
+
+	}
+	wd := uint(u64)
+
+	err := findStock(symbol, wd, stock)
+	stock = ReturnStock(symbol, wd, stock)
+	if err != nil {
+		return c.Status(500).SendString("Stock not found")
+
+	}
+	type UpdateStock struct {
+		Favorite bool `json:"favorite" gorm:"default:true"`
+	}
+
+	updatedInfo := new(UpdateStock)
+	if err := c.BodyParser(updatedInfo); err != nil {
+		return c.Status(500).JSON("Can't create new stock")
+	}
+	stock.Favorite = updatedInfo.Favorite
+
+	DB.Where("symbol=?", symbol).Where("user_refer=?", user).Save(&stock)
 
 	return c.Status(200).JSON(&stock)
+
+}
+
+// TODO: Implement Get favorites
+func Getfavorites(c *fiber.Ctx) error {
+	//returns all stocks of a given user
+	//symbol := c.Params("symbol")
+	user := c.Params("user_refer")
+	var stock []Stock
+	u64, er := strconv.ParseUint(user, 10, 32)
+	//convert to uint
+	if er != nil {
+		fmt.Println(er.Error())
+
+	}
+	wd := uint(u64)
+
+	//err := findStock(symbol, wd, stock)
+	stock = GetFavs(wd, stock)
+
+	return c.JSON(&stock)
 
 }
