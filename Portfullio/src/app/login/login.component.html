@@ -1,7 +1,7 @@
 <!--This displays the main card that gives a short overview of what the project is-->
-<p>
-  <h2 class="titleLogin">Login</h2>
-  <div>
+<p></p>
+<h2 class="titleLogin">Login</h2>
+<div>
   <form class="center">
     <mat-form-field>
       <label for="name">Username: </label>
@@ -11,13 +11,17 @@
   <form class="center">
     <mat-form-field>
       <label for="name">Password: </label>
-      <input id="name" [(ngModel)]="login.password" placeholder="Password" />
+      <input
+        type="password"
+        id="name"
+        [(ngModel)]="login.password"
+        placeholder="Password"
+      />
     </mat-form-field>
   </form>
-  
 </div>
 <div class="center">
   <button type="button">
-  <span>Login</span>
+    <span>Login</span>
   </button>
 </div>
