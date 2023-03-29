@@ -2,24 +2,36 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Login } from '../Login';
 import loginsData from './logins.json';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { NgModule } from '@angular/core';
 
 interface Logins {
   username: String;
   password: String;
 }
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
   // class Profile {
   //   userName: string;
   //   constructor(message: string) {
   //     this.userName = message
   //   }
   // }
+
+  checkoutForm = this.formBuilder.group({
+    username: '',
+    password: '',
+  });
+  constructor(private formBuilder: FormBuilder) {}
+
+  onSubmit(): void {
+    console.warn('Login Successful!', this.checkoutForm.value);
+    this.checkoutForm.reset();
+  }
 
   public user: string = 'OliverP';
   ngOnInit(): void {
