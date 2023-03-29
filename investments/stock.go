@@ -241,7 +241,6 @@ func FavoriteStock(c *fiber.Ctx) error {
 
 }
 
-// TODO: Implement Get favorites
 func GetFavorites(c *fiber.Ctx) error {
 	var user_refer = c.Params("user_refer")
 	u64, err := strconv.ParseUint(user_refer, 10, 32)

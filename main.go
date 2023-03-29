@@ -29,6 +29,12 @@ func Routers(app *fiber.App) {
 	app.Put("/stocks/:user_refer/:symbol", investments.UpdateStock)
 	app.Put("/stock/:user_refer/:symbol", investments.FavoriteStock)
 	app.Get("/favorites/:user_refer", investments.GetFavorites)
+	//End of stock routes
+
+	app.Get("/cash/:user_refer", investments.GetCashInvestments)
+	app.Post("/cash/:user_refer", investments.SaveCash)
+	app.Put("/cash/:user_refer/:currency", investments.UpdateCash)
+	app.Delete("/cash/:user_refer/:currency", investments.DeleteCash)
 
 }
 
@@ -36,6 +42,7 @@ func main() {
 	//Initialize databse tables
 	investments.InitialMigration()
 	investments.MigrateStocks()
+	investments.MigrateCash()
 	//Initialize Fiber
 
 	app := fiber.New()
