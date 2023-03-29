@@ -242,22 +242,14 @@ func FavoriteStock(c *fiber.Ctx) error {
 }
 
 // TODO: Implement Get favorites
-func Getfavorites(c *fiber.Ctx) error {
-	//returns all stocks of a given user
-	//symbol := c.Params("symbol")
-	user := c.Params("user_refer")
-	var stock []Stock
-	u64, er := strconv.ParseUint(user, 10, 32)
-	//convert to uint
-	if er != nil {
-		fmt.Println(er.Error())
-
+func GetFavorites(c *fiber.Ctx) error {
+	var user_refer = c.Params("user_refer")
+	u64, err := strconv.ParseUint(user_refer, 10, 32)
+	if err != nil {
+		fmt.Println(err.Error())
 	}
 	wd := uint(u64)
-
-	//err := findStock(symbol, wd, stock)
-	stock = GetFavs(wd, stock)
-
-	return c.JSON(&stock)
-
+	var stocks []Stock
+	DB.Where("user_refer=?", wd).Where("favorite=?", true).Find(&stocks)
+	return c.JSON(stocks)
 }

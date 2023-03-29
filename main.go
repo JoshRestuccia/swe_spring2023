@@ -28,7 +28,7 @@ func Routers(app *fiber.App) {
 	app.Delete("/stocks/:user_refer", investments.DeleteStocks)
 	app.Put("/stocks/:user_refer/:symbol", investments.UpdateStock)
 	app.Put("/stock/:user_refer/:symbol", investments.FavoriteStock)
-	app.Get("/stocks/:user_refer/:favorite", investments.Getfavorites) //TODO: Fix Method
+	app.Get("/favorites/:user_refer", investments.GetFavorites)
 
 }
 
