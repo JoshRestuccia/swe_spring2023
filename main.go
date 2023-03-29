@@ -14,6 +14,8 @@ func Routers(app *fiber.App) {
 	app.Get("/users", investments.GetUsers)
 	app.Get("/users/:id", investments.GetUser)
 	app.Get("/users/:id/stocks", investments.GetUsersStocks)
+	app.Get("users/:id/totalstocks", investments.GetUsersTotalStocks)
+	app.Get("users/:id/totalcash", investments.GetUsersTotalCash)
 	app.Get("users/:id/total", investments.GetUsersTotal)
 
 	app.Post("/users", investments.SaveUser)
@@ -35,7 +37,7 @@ func Routers(app *fiber.App) {
 	app.Post("/cash/:user_refer", investments.SaveCash)
 	app.Put("/cash/:user_refer/:currency", investments.UpdateCash)
 	app.Delete("/cash/:user_refer/:currency", investments.DeleteCash)
-
+	app.Get("/cash/:user_refer/:currency", investments.GetSingleCash)
 }
 
 func main() {

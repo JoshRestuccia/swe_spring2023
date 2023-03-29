@@ -40,6 +40,22 @@ func GetCashInvestments(c *fiber.Ctx) error {
 	return c.JSON(&money)
 }
 
+func GetSingleCash(c *fiber.Ctx) error {
+	var user_refer = c.Params("user_refer")
+	var currency = c.Params("currency")
+	u64, err := strconv.ParseUint(user_refer, 10, 32)
+	//convert id to uint
+
+	if err != nil {
+		fmt.Println(err.Error())
+
+	}
+	wd := uint(u64)
+	var cash Cash
+	DB.Where("user_refer=?", wd).Where("currency=?", currency).Find(&cash)
+	return c.JSON(&cash)
+}
+
 func SaveCash(c *fiber.Ctx) error {
 	cash := new(Cash)
 	if err := c.BodyParser(cash); err != nil {
