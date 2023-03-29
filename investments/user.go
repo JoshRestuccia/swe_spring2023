@@ -69,7 +69,7 @@ func GetUsersStocks(c *fiber.Ctx) error {
 
 }
 
-func GetUsersTotal(c *fiber.Ctx) error {
+func GetUsersTotalStocks(c *fiber.Ctx) error {
 	//returns total value of all stocks owned by the user
 
 	id := c.Params("id")
@@ -89,6 +89,9 @@ func GetUsersTotal(c *fiber.Ctx) error {
 		total += float64(stocks[i].Quantity) * stocks[i].Price
 
 	}
+
+	fmt.Printf("Total stock portfolio value: %.2f", total)
+
 	return c.JSON(&total)
 }
 
