@@ -90,9 +90,59 @@ func GetUsersTotalStocks(c *fiber.Ctx) error {
 
 	}
 
-	fmt.Printf("Total stock portfolio value: %.2f", total)
+	fmt.Printf("Total stock portfolio value: $%.2f\n", total)
 
 	return c.JSON(&total)
+}
+
+func GetUsersTotalCash(c *fiber.Ctx) error {
+	id := c.Params("id")
+	u64, err := strconv.ParseUint(id, 10, 32)
+	//convert to uint
+	if err != nil {
+		fmt.Println(err.Error())
+
+	}
+	wd := uint(u64)
+	var cash []Cash
+	var total float64
+	DB.Find(&cash, "user_refer=?", wd)
+	for i := range cash {
+		total += float64(cash[i].Amount)
+	}
+	fmt.Printf("Total cash assets value: $%.2f\n", total)
+	return c.JSON(&total)
+}
+
+func GetUsersTotal(c *fiber.Ctx) error {
+	var total float64
+	id := c.Params("id")
+	u64, err := strconv.ParseUint(id, 10, 32)
+	//convert to uint
+	if err != nil {
+		fmt.Println(err.Error())
+
+	}
+	wd := uint(u64)
+	var cash []Cash
+
+	DB.Find(&cash, "user_refer=?", wd)
+	for i := range cash {
+		total += float64(cash[i].Amount)
+	}
+	fmt.Printf("Total cash assets value: $%.2f\n", total)
+	var total2 float64
+	var stocks []Stock
+	DB.Find(&stocks, "user_refer=?", wd)
+	for i := range stocks {
+		total2 += float64(stocks[i].Quantity) * stocks[i].Price
+
+	}
+	fmt.Printf("Total stock portfolio value: $%.2f\n", total2)
+	total += total2
+	fmt.Printf("Total portfolio value: $%.2f\n", total)
+	return c.JSON(&total)
+
 }
 
 func GetUser(c *fiber.Ctx) error {
