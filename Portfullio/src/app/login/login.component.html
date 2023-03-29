@@ -2,21 +2,30 @@
 <p></p>
 <h2 class="titleLogin">Login</h2>
 <div>
-  <form class="center" [formGroup]="checkoutForm" (ngSubmit)="onSubmit()">
-    <label for="username">Username: </label>
-    <input id="username" formControlName="username" placeholder="Username" />
-    <label for="password">Password: </label>
-    <input
-      type="password"
-      id="name"
-      formControlName="password"
-      placeholder="Password"
-    />
-    <button type="submit">Login</button>
+  <form
+    class="center"
+    action="localhost:3000/users/"
+    method="POST"
+    [formGroup]="checkoutForm"
+    (ngSubmit)="onSubmit()"
+  >
+    <section>
+      <label for="username">Username: </label>
+      <input id="username" formControlName="username" placeholder="Username" />
+      <br />
+      <label for="password">Password: </label>
+      <input
+        type="password"
+        id="name"
+        formControlName="password"
+        placeholder="Password"
+      />
+      <button type="submit">Login</button>
+    </section>
   </form>
 
-  <h1>Display Data from Json File in Angular 9</h1>
-  <div>
+  <h1 class="center">Display Data from Json File in Angular 9</h1>
+  <div class="center">
     <table class="table table-striped">
       <thead>
         <tr>
