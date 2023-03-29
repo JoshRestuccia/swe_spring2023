@@ -35,7 +35,7 @@ func Routers(app *fiber.App) {
 	app.Post("/cash/:user_refer", investments.SaveCash)
 	app.Put("/cash/:user_refer/:currency", investments.UpdateCash)
 	app.Delete("/cash/:user_refer/:currency", investments.DeleteCash)
-
+	app.Get("/cash/:user_refer/:currency", investments.GetSingleCash)
 }
 
 func main() {
