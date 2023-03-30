@@ -28,3 +28,9 @@ https://documenter.getpostman.com/view/25705725/2s93RTQC9Z
 -Added additional cypress unit testing to check new implementations
 
 -Added a layer of security to the password where the password is now hidden on the screen
+
+-New box where the email username and password are now the inputs instead of just username and password, helping out in sending information to the backend
+
+-When login button is pressed, there is now a form that is submitted and a message that is displayed in the console that says login successful, which shows the username email and password
+
+-Data is now displayed from a local json file, which will help in communicating with backend
