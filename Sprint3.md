@@ -24,3 +24,5 @@ https://documenter.getpostman.com/view/25705725/2s93RTQC9Z
 ### Frontend
 
 -Added a basic ag-grid to display stock names, prices, and quantities
+
+-Added additional cypress unit testing to check new implementations
