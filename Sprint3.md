@@ -31,9 +31,8 @@ https://documenter.getpostman.com/view/25705725/2s93RTQC9Z
 
 -New box where the email username and password are now the inputs instead of just username and password, helping out in sending information to the backend
 
--When login button is pressed, there is now a form that is submitted and a message that is displayed in the console that says login successful, which shows the username email and password
-### Video Links:
-Part 1: https://youtu.be/uJdJutUunBU
-Part 2: https://youtu.be/OGb47kTjbDE
+-Form submission now works in html and is able to be used and understandable
 
--Data is now displayed from a local json file, which will help in communicating with backend
+-When login button is pressed, there is now a form that is submitted and a message that is displayed in the console that says login successful, which shows the username email and password. This is also a unit test for us.
+
+-Data is now displayed on login page from a local json file, which will help in communicating with backend, works as a sort of unit test
