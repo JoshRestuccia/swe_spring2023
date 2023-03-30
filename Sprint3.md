@@ -14,5 +14,9 @@
 
 -Added function to allow a user to ge tthe total valuation of his account including both cash assets and stocks
 
+-New routes added for all fucntionality described above
+
+-Postman documentation updated to include new routes
+
 ### API Documentation
 https://documenter.getpostman.com/view/25705725/2s93RTQC9Z
