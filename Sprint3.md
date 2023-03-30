@@ -26,3 +26,5 @@ https://documenter.getpostman.com/view/25705725/2s93RTQC9Z
 -Added a basic ag-grid to display stock names, prices, and quantities
 
 -Added additional cypress unit testing to check new implementations
+
+-Added a layer of security to the password where the password is now hidden on the screen
