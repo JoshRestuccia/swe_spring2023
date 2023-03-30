@@ -24,6 +24,7 @@ export class LoginComponent {
 
   checkoutForm = this.formBuilder.group({
     username: '',
+    email:'',
     password: '',
   });
   constructor(private formBuilder: FormBuilder) {}
