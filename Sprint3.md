@@ -1,4 +1,4 @@
-##Backend
+### Backend
 
 -Added functionality to allow a user to update a specific stock (change the price and quantity of shares owned)
 
