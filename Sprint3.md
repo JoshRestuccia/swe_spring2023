@@ -36,3 +36,9 @@ https://documenter.getpostman.com/view/25705725/2s93RTQC9Z
 -When login button is pressed, there is now a form that is submitted and a message that is displayed in the console that says login successful, which shows the username email and password. This is also a unit test for us.
 
 -Data is now displayed on login page from a local json file, which will help in communicating with backend, works as a sort of unit test
+
+### Video Links
+
+Part 1: https://youtu.be/uJdJutUunBU
+
+Part 2: https://youtu.be/OGb47kTjbDE
