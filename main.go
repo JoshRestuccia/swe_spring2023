@@ -41,9 +41,9 @@ func Routers(app *fiber.App) {
 
 	app.Get("/crypto/:user_refer", investments.GetCryptoInvestments)
 	app.Post("/crypto/:user_refer", investments.SaveCrypto)
-	app.Put("/cash/:user_refer/:currency", investments.UpdateCrypto)
-	app.Delete("/cash/:user_refer/:currency", investments.DeleteCrypto)
-	app.Get("/cash/:user_refer/:currency", investments.GetSingleCrypto)
+	app.Put("/crypto/:user_refer/:name", investments.UpdateCrypto)
+	app.Delete("/crypto/:user_refer/:name", investments.DeleteCrypto)
+	app.Get("/crypto/:user_refer/:name", investments.GetSingleCrypto)
 }
 
 func main() {
