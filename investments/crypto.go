@@ -10,10 +10,10 @@ import (
 )
 
 type crypto struct {
-	Name        string `json:"name"`
-	Amount      uint   `json:"amount" gorm:"default:0"`
-	DollarValue uint   `json:"dollar_"`
-	UserRefer   uint   `json:"userRefer"`
+	Name          string  `json:"name"`
+	Amount        uint    `json:"amount" gorm:"default:0"`
+	DollarConvert float64 `json:"dollar_" gorm:"default:1.00"`
+	UserRefer     uint    `json:"userRefer"`
 	//User      User   `gorm:"foreignKey:UserRefer"`
 }
 
