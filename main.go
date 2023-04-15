@@ -38,6 +38,12 @@ func Routers(app *fiber.App) {
 	app.Put("/cash/:user_refer/:currency", investments.UpdateCash)
 	app.Delete("/cash/:user_refer/:currency", investments.DeleteCash)
 	app.Get("/cash/:user_refer/:currency", investments.GetSingleCash)
+
+	app.Get("/crypto/:user_refer", investments.GetCryptoInvestments)
+	app.Post("/crypto/:user_refer", investments.SaveCrypto)
+	app.Put("/cash/:user_refer/:currency", investments.UpdateCrypto)
+	app.Delete("/cash/:user_refer/:currency", investments.DeleteCrypto)
+	app.Get("/cash/:user_refer/:currency", investments.GetSingleCrypto)
 }
 
 func main() {
@@ -45,6 +51,7 @@ func main() {
 	investments.InitialMigration()
 	investments.MigrateStocks()
 	investments.MigrateCash()
+	investments.MigrateCrypto()
 	//Initialize Fiber
 
 	app := fiber.New()
