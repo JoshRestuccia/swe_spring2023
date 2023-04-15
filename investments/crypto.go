@@ -23,7 +23,7 @@ func MigrateCrypto() {
 		fmt.Println(err.Error())
 		panic("cannot connect to database")
 	}
-	DB.AutoMigrate(&Cash{})
+	DB.AutoMigrate(&crypto{})
 }
 
 func GetCryptoInvestments(c *fiber.Ctx) error {
