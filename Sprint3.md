@@ -20,3 +20,25 @@
 
 ### API Documentation
 https://documenter.getpostman.com/view/25705725/2s93RTQC9Z
+
+### Frontend
+
+-Added a basic ag-grid to display stock names, prices, and quantities
+
+-Added additional cypress unit testing to check new implementations
+
+-Added a layer of security to the password where the password is now hidden on the screen
+
+-New box where the email username and password are now the inputs instead of just username and password, helping out in sending information to the backend
+
+-Form submission now works in html and is able to be used and understandable
+
+-When login button is pressed, there is now a form that is submitted and a message that is displayed in the console that says login successful, which shows the username email and password. This is also a unit test for us.
+
+-Data is now displayed on login page from a local json file, which will help in communicating with backend, works as a sort of unit test
+
+### Video Links
+
+Part 1: https://youtu.be/uJdJutUunBU
+
+Part 2: https://youtu.be/OGb47kTjbDE
