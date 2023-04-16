@@ -69,6 +69,26 @@ func GetUsersStocks(c *fiber.Ctx) error {
 
 }
 
+func GetUsersTotalcrypto(c *fiber.Ctx) error {
+	id := c.Params("id")
+	u64, err := strconv.ParseUint(id, 10, 32)
+	//convert to uint
+	if err != nil {
+		fmt.Println(err.Error())
+
+	}
+	wd := uint(u64)
+	var crypto []crypto
+	var total float64
+	DB.Find(&crypto, "user_refer=?", wd)
+	for i := range crypto {
+		total += float64(crypto[i].Amount * uint(crypto[i].DollarConvert))
+	}
+	fmt.Printf("Total crypto assets value: $%.2f\n", total)
+	return c.JSON(&total)
+
+}
+
 func GetUsersTotalStocks(c *fiber.Ctx) error {
 	//returns total value of all stocks owned by the user
 
@@ -140,6 +160,15 @@ func GetUsersTotal(c *fiber.Ctx) error {
 	}
 	fmt.Printf("Total stock portfolio value: $%.2f\n", total2)
 	total += total2
+	var total3 float64
+	var crypto []crypto
+	DB.Find(&crypto, "user_refer=?", wd)
+	for i := range crypto {
+		total3 += float64(crypto[i].Amount) * crypto[i].DollarConvert
+
+	}
+	fmt.Printf("Total crypto portfolio value: $%.2f\n", total3)
+	total += total3
 	fmt.Printf("Total portfolio value: $%.2f\n", total)
 	return c.JSON(&total)
 

@@ -16,6 +16,7 @@ func Routers(app *fiber.App) {
 	app.Get("/users/:id/stocks", investments.GetUsersStocks)
 	app.Get("users/:id/totalstocks", investments.GetUsersTotalStocks)
 	app.Get("users/:id/totalcash", investments.GetUsersTotalCash)
+	app.Get("users/:id/totalcrypto", investments.GetUsersTotalcrypto)
 	app.Get("users/:id/total", investments.GetUsersTotal)
 
 	app.Post("/users", investments.SaveUser)
