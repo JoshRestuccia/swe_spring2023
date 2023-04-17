@@ -1,10 +1,12 @@
 package investments
 
 import (
+	"encoding/json"
 	"fmt"
+	"net/http"
 	"strconv"
 
-	"github.com/gofiber/fiber/v2"
+	"github.com/gorilla/mux"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -25,88 +27,80 @@ func MigrateCash() {
 	DB.AutoMigrate(&Cash{})
 }
 
-func GetCashInvestments(c *fiber.Ctx) error {
-
-	var user_refer = c.Params("user_refer")
-	u64, err := strconv.ParseUint(user_refer, 10, 32)
-	//convert to uint
+func GetCashInvestments(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	userRefer, err := strconv.ParseUint(params["user_refer"], 10, 32)
 	if err != nil {
 		fmt.Println(err.Error())
-
 	}
-	wd := uint(u64)
+	wd := uint(userRefer)
 	var money []Cash
 	DB.Find(&money, "user_refer=?", wd)
-	return c.JSON(&money)
+	json.NewEncoder(w).Encode(money)
 }
 
-func GetSingleCash(c *fiber.Ctx) error {
-	var user_refer = c.Params("user_refer")
-	var currency = c.Params("currency")
-	u64, err := strconv.ParseUint(user_refer, 10, 32)
-	//convert id to uint
-
+func GetSingleCash(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	userRefer, err := strconv.ParseUint(params["user_refer"], 10, 32)
 	if err != nil {
 		fmt.Println(err.Error())
-
 	}
-	wd := uint(u64)
+	wd := uint(userRefer)
+	currency := params["currency"]
 	var cash Cash
 	DB.Where("user_refer=?", wd).Where("currency=?", currency).Find(&cash)
-	return c.JSON(&cash)
+	json.NewEncoder(w).Encode(cash)
 }
 
-func SaveCash(c *fiber.Ctx) error {
-	cash := new(Cash)
-	if err := c.BodyParser(cash); err != nil {
-		return c.Status(500).SendString(err.Error())
+func SaveCash(w http.ResponseWriter, r *http.Request) {
+	var cash Cash
+	err := json.NewDecoder(r.Body).Decode(&cash)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
 	}
 	DB.Create(&cash)
-
-	return c.JSON(&cash)
-
+	json.NewEncoder(w).Encode(cash)
 }
 
-func DeleteCash(c *fiber.Ctx) error {
-	var user_refer = c.Params("user_refer")
-	var currency = c.Params("currency")
-	u64, err := strconv.ParseUint(user_refer, 10, 32)
-	//convert id to uint
-
+func DeleteCash(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	userRefer, err := strconv.ParseUint(params["user_refer"], 10, 32)
 	if err != nil {
 		fmt.Println(err.Error())
-
 	}
-	wd := uint(u64)
+	wd := uint(userRefer)
+	currency := params["currency"]
 	var cash Cash
 	DB.Where("user_refer=?", wd).Where("currency=?", currency).Unscoped().Delete(&cash)
-	return c.SendString("Cash asset removed")
+	fmt.Fprintf(w, "Cash asset removed")
 }
 
-func UpdateCash(c *fiber.Ctx) error {
-	userRefer := c.Params("user_refer")
-	currency := c.Params("currency")
-
+func UpdateCash(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	userRefer := params["user_refer"]
+	currency := params["currency"]
 	type cashUpdate struct {
 		Amount uint `json:"amount"`
 	}
 	var update cashUpdate
-	if err := c.BodyParser(&update); err != nil {
-		return c.Status(500).SendString(err.Error())
+	err := json.NewDecoder(r.Body).Decode(&update)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
 	}
-
 	result := DB.Model(&Cash{}).
 		Where("user_refer = ? AND currency = ?", userRefer, currency).
 		Update("amount", update.Amount)
 	if result.Error != nil {
-		return c.Status(500).SendString(result.Error.Error())
+		http.Error(w, result.Error.Error(), http.StatusInternalServerError)
+		return
 	}
 	if result.RowsAffected == 0 {
-		return c.Status(404).SendString("cash not found")
+		http.Error(w, "cash not found", http.StatusNotFound)
+		return
 	}
-
 	var cash Cash
-	DB.Where("user_refer = ? AND currency = ?", userRefer, currency).
-		First(&cash)
-	return c.JSON(&cash)
+	DB.Where("user_refer = ? AND currency = ?", userRefer, currency).First(&cash)
+	json.NewEncoder(w).Encode(cash)
 }

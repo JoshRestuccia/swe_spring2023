@@ -1,11 +1,13 @@
 package investments
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
+	"net/http"
 	"strconv"
 
-	"github.com/gofiber/fiber/v2"
+	"github.com/gorilla/mux"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -46,11 +48,11 @@ func CreateResponseStock(stock Stock) Stock {
 	return Stock{Symbol: stock.Symbol, Name: stock.Name, Price: stock.Price, Quantity: stock.Quantity, UserRefer: stock.UserRefer}
 }
 
-func GetStocks(c *fiber.Ctx) error {
-
+func GetStocks(w http.ResponseWriter, r *http.Request) {
 	//returns all stocks of a given user
+	params := mux.Vars(r)
+	user_refer := params["user_refer"]
 
-	var user_refer = c.Params("user_refer")
 	//get the user id number as a string
 	u64, err := strconv.ParseUint(user_refer, 10, 32)
 	//convert to uint
@@ -63,13 +65,13 @@ func GetStocks(c *fiber.Ctx) error {
 	//find all stocks matching the user id
 	DB.Find(&stocks, "user_refer=?", wd)
 
-	return c.JSON(&stocks)
-
+	json.NewEncoder(w).Encode(stocks)
 }
 
-func GetStock(c *fiber.Ctx) error {
-	var user_refer = c.Params("user_refer")
-	var symbol = c.Params("symbol")
+func GetStock(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	user_refer := params["user_refer"]
+	symbol := params["symbol"]
 	u64, err := strconv.ParseUint(user_refer, 10, 32)
 	//convert id to uint
 
@@ -80,16 +82,17 @@ func GetStock(c *fiber.Ctx) error {
 	wd := uint(u64)
 	var stock Stock
 	DB.Where("user_refer=?", wd).Where("symbol=?", symbol).Find(&stock)
-	return c.JSON(&stock)
-
+	json.NewEncoder(w).Encode(stock)
 }
 
-func SaveStock(c *fiber.Ctx) error {
+func SaveStock(w http.ResponseWriter, r *http.Request) {
 	//Should be added to add stock with user_refer
 	//adds a new stock
 	stock := new(Stock)
-	if err := c.BodyParser(stock); err != nil {
-		return c.Status(500).SendString(err.Error())
+	err := json.NewDecoder(r.Body).Decode(&stock)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
 	}
 
 	//var user User
@@ -97,52 +100,44 @@ func SaveStock(c *fiber.Ctx) error {
 	DB.Create(&stock)
 	//stock.User = FindUser(stock.UserRefer, &user)
 
-	return c.JSON(&stock)
-
+	json.NewEncoder(w).Encode(stock)
 }
 
-func DeleteStock(c *fiber.Ctx) error {
-
+func DeleteStock(w http.ResponseWriter, r *http.Request) {
 	//removes a single stock from a user's portfolio
+	vars := mux.Vars(r)
+	userRefer := vars["user_refer"]
+	symbol := vars["symbol"]
 
-	var user_refer = c.Params("user_refer")
-	var symbol = c.Params("symbol")
 	// get the user id number and stock symbol as strings
-
-	u64, err := strconv.ParseUint(user_refer, 10, 32)
-	//convert id to uint
-
+	u64, err := strconv.ParseUint(userRefer, 10, 32)
 	if err != nil {
 		fmt.Println(err.Error())
-
 	}
 	wd := uint(u64)
+
 	var stock Stock
 	//delete stocks matching the user id and stock symbol
 	DB.Where("user_refer=?", wd).Where("symbol=?", symbol).Unscoped().Delete(&stock)
 
-	return c.SendString("Stock deleted")
-
+	fmt.Fprint(w, "Stock deleted")
 }
 
-func DeleteStocks(c *fiber.Ctx) error {
-
+func DeleteStocks(w http.ResponseWriter, r *http.Request) {
 	//same logic as DeleteStock() but no symbol parameter
+	vars := mux.Vars(r)
+	userRefer := vars["user_refer"]
 
-	var user_refer = c.Params("user_refer")
-
-	u64, err := strconv.ParseUint(user_refer, 10, 32)
+	u64, err := strconv.ParseUint(userRefer, 10, 32)
 	if err != nil {
 		fmt.Println(err.Error())
-
 	}
 	wd := uint(u64)
+
 	var stock Stock
 	DB.Where("user_refer=?", wd).Delete(&stock)
 
-	//DB.Delete(&stock).Where("user_refer=?", wd).Where("symbol=?", symbol).Find(&stock)
-	return c.SendString("Stock deleted")
-
+	fmt.Fprint(w, "Stock deleted")
 }
 
 func findStock(symbol string, id uint, stock Stock) error {
@@ -158,31 +153,38 @@ func ReturnStock(symbol string, id uint, stock Stock) Stock {
 	return stock
 }
 
-func GetFavs(id uint, stock []Stock) []Stock {
-	DB.Where("user_refer=?", id).Find(&stock)
-	return stock
+func GetFavs(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	userRefer := vars["user_refer"]
+	u64, err := strconv.ParseUint(userRefer, 10, 32)
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+	wd := uint(u64)
+	var stocks []Stock
+	DB.Where("user_refer=?", wd).Find(&stocks)
+	json.NewEncoder(w).Encode(stocks)
 }
 
-func UpdateStock(c *fiber.Ctx) error {
-
+func UpdateStock(w http.ResponseWriter, r *http.Request) {
 	//updates a stock
-
-	symbol := c.Params("symbol")
-	user := c.Params("user_refer")
+	params := mux.Vars(r)
+	symbol := params["symbol"]
+	user_refer := params["user_refer"]
 	var stock Stock
-	u64, er := strconv.ParseUint(user, 10, 32)
+	u64, er := strconv.ParseUint(user_refer, 10, 32)
 	//convert to uint
 	if er != nil {
 		fmt.Println(er.Error())
-
 	}
 	wd := uint(u64)
 
 	err := findStock(symbol, wd, stock)
 	stock = ReturnStock(symbol, wd, stock)
 	if err != nil {
-		return c.Status(500).SendString("Stock not found")
-
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte("Stock not found"))
+		return
 	}
 
 	type UpdateStock struct {
@@ -193,56 +195,63 @@ func UpdateStock(c *fiber.Ctx) error {
 	}
 
 	updatedInfo := new(UpdateStock)
-	if err := c.BodyParser(updatedInfo); err != nil {
-		return c.Status(500).JSON("Can't create new stock")
+	err = json.NewDecoder(r.Body).Decode(updatedInfo)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte("Can't create new stock"))
+		return
 	}
 	stock.Symbol = updatedInfo.Symbol
 	stock.Name = updatedInfo.Name
 	stock.Quantity = updatedInfo.Quantity
 	stock.Price = updatedInfo.Price
 
-	DB.Where("symbol=?", symbol).Where("user_refer=?", user).Save(&stock)
+	DB.Where("symbol=?", symbol).Where("user_refer=?", user_refer).Save(&stock)
 
-	return c.Status(200).JSON(&stock)
-
+	json.NewEncoder(w).Encode(stock)
 }
 
-func FavoriteStock(c *fiber.Ctx) error {
-	symbol := c.Params("symbol")
-	user := c.Params("user_refer")
+func FavoriteStock(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	symbol := params["symbol"]
+	user_refer := params["user_refer"]
 	var stock Stock
-	u64, er := strconv.ParseUint(user, 10, 32)
+	u64, er := strconv.ParseUint(user_refer, 10, 32)
 	//convert to uint
 	if er != nil {
 		fmt.Println(er.Error())
-
 	}
 	wd := uint(u64)
 
 	err := findStock(symbol, wd, stock)
 	stock = ReturnStock(symbol, wd, stock)
 	if err != nil {
-		return c.Status(500).SendString("Stock not found")
-
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte("Stock not found"))
+		return
 	}
+
 	type UpdateStock struct {
 		Favorite bool `json:"favorite" gorm:"default:true"`
 	}
 
 	updatedInfo := new(UpdateStock)
-	if err := c.BodyParser(updatedInfo); err != nil {
-		return c.Status(500).JSON("Can't create new stock")
+	err = json.NewDecoder(r.Body).Decode(updatedInfo)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte("Can't create new stock"))
+		return
 	}
 	stock.Favorite = updatedInfo.Favorite
 
-	DB.Where("symbol=?", symbol).Where("user_refer=?", user).Save(&stock)
+	DB.Where("symbol=?", symbol).Where("user_refer=?", user_refer).Save(&stock)
 
-	return c.Status(200).JSON(&stock)
-
+	json.NewEncoder(w).Encode(stock)
 }
 
-func GetFavorites(c *fiber.Ctx) error {
-	var user_refer = c.Params("user_refer")
+func GetFavorites(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	user_refer := params["user_refer"]
 	u64, err := strconv.ParseUint(user_refer, 10, 32)
 	if err != nil {
 		fmt.Println(err.Error())
@@ -250,5 +259,5 @@ func GetFavorites(c *fiber.Ctx) error {
 	wd := uint(u64)
 	var stocks []Stock
 	DB.Where("user_refer=?", wd).Where("favorite=?", true).Find(&stocks)
-	return c.JSON(stocks)
+	json.NewEncoder(w).Encode(stocks)
 }
