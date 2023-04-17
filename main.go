@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/JoshRestuccia/swe_spring2023/investments"
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 )
 
 func hello(c *fiber.Ctx) error {
@@ -56,6 +57,8 @@ func main() {
 	//Initialize Fiber
 
 	app := fiber.New()
+
+	app.Use(cors.New())
 
 	app.Get("/", hello)
 	Routers(app)
