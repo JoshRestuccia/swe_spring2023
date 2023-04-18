@@ -20,4 +20,9 @@ Once the command is done running, there will be a localhost url that you can ctr
 This will give allow you to see the app on the localhost url, so once you open it on your browser you are
 able to use our application.
 
+Home Page
+
+![image](https://user-images.githubusercontent.com/100590185/232650355-c64d1d10-ce92-448d-82b3-3d1fc562720b.png)
+
+
 #### Members: Joshua Restuccia, Sean Cook, Oliver Peralta, and Carl-Frederic Theodate
