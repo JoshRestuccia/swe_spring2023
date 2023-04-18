@@ -1,19 +1,30 @@
 input {
   padding: 0.5rem;
 }
-.example-form {
-  justify-content: center;
+
+.column {
+  flex-direction: column;
+}
+
+.form {
   min-width: 150px;
   max-width: 500px;
   width: 100%;
+}
+
+.align-start {
+  align-items: flex-start;
 }
 
 .example-full-width {
   width: 100%;
 }
 .center {
-  display: flex;
   justify-content: center;
+  align-items: center;
+}
+.flex {
+  display: flex;
 }
 .titleLogin {
   display: flex;
