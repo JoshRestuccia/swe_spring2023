@@ -1,12 +1,10 @@
 package investments
 
 import (
-	"encoding/json"
 	"fmt"
-	"net/http"
 	"strconv"
 
-	"github.com/gorilla/mux"
+	"github.com/gofiber/fiber/v2"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -16,10 +14,10 @@ type crypto struct {
 	Amount        uint    `json:"amount" gorm:"default:0"`
 	DollarConvert float64 `json:"dollar_" gorm:"default:1.00"`
 	UserRefer     uint    `json:"userRefer"`
+	//User      User   `gorm:"foreignKey:UserRefer"`
 }
 
 func MigrateCrypto() {
-	var err error
 	DB, err = gorm.Open(mysql.Open(DNS), &gorm.Config{})
 	if err != nil {
 		fmt.Println(err.Error())
@@ -28,84 +26,88 @@ func MigrateCrypto() {
 	DB.AutoMigrate(&crypto{})
 }
 
-func GetCryptoInvestments(w http.ResponseWriter, r *http.Request) {
-	params := mux.Vars(r)
-	userRefer, err := strconv.ParseUint(params["user_refer"], 10, 32)
+func GetCryptoInvestments(c *fiber.Ctx) error {
+
+	var user_refer = c.Params("user_refer")
+	u64, err := strconv.ParseUint(user_refer, 10, 32)
+	//convert to uint
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
-		return
+		fmt.Println(err.Error())
+
 	}
-	wd := uint(userRefer)
-	var cryptoList []crypto
-	DB.Find(&cryptoList, "user_refer=?", wd)
-	json.NewEncoder(w).Encode(cryptoList)
+	wd := uint(u64)
+	var crypto []crypto
+	DB.Find(&crypto, "user_refer=?", wd)
+	return c.JSON(&crypto)
 }
 
-func GetSingleCrypto(w http.ResponseWriter, r *http.Request) {
-	params := mux.Vars(r)
-	userRefer, err := strconv.ParseUint(params["user_refer"], 10, 32)
+func GetSingleCrypto(c *fiber.Ctx) error {
+	var user_refer = c.Params("user_refer")
+	var name = c.Params("name")
+	u64, err := strconv.ParseUint(user_refer, 10, 32)
+	//convert id to uint
+
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
-		return
+		fmt.Println(err.Error())
+
 	}
-	wd := uint(userRefer)
+	wd := uint(u64)
 	var crypto crypto
-	DB.Where("user_refer=?", wd).Where("name=?", params["name"]).Find(&crypto)
-	json.NewEncoder(w).Encode(crypto)
+	DB.Where("user_refer=?", wd).Where("name=?", name).Find(&crypto)
+	return c.JSON(&crypto)
 }
 
-func SaveCrypto(w http.ResponseWriter, r *http.Request) {
-	var crypto crypto
-	err := json.NewDecoder(r.Body).Decode(&crypto)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
-		return
+func SaveCrypto(c *fiber.Ctx) error {
+	crypto := new(crypto)
+	if err := c.BodyParser(crypto); err != nil {
+		return c.Status(500).SendString(err.Error())
 	}
 	DB.Create(&crypto)
-	json.NewEncoder(w).Encode(crypto)
+
+	return c.JSON(&crypto)
+
 }
 
-func DeleteCrypto(w http.ResponseWriter, r *http.Request) {
-	params := mux.Vars(r)
-	userRefer, err := strconv.ParseUint(params["user_refer"], 10, 32)
+func DeleteCrypto(c *fiber.Ctx) error {
+	var user_refer = c.Params("user_refer")
+	var name = c.Params("name")
+	u64, err := strconv.ParseUint(user_refer, 10, 32)
+	//convert id to uint
+
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
-		return
+		fmt.Println(err.Error())
+
 	}
-	wd := uint(userRefer)
+	wd := uint(u64)
 	var crypto crypto
-	DB.Where("user_refer=?", wd).Where("name=?", params["name"]).Unscoped().Delete(&crypto)
-	w.Write([]byte("Crypto asset removed"))
+	DB.Where("user_refer=?", wd).Where("name=?", name).Unscoped().Delete(&crypto)
+	return c.SendString("Crypto asset removed")
 }
 
-func UpdateCrypto(w http.ResponseWriter, r *http.Request) {
-	params := mux.Vars(r)
-	userRefer := params["user_refer"]
-	name := params["name"]
+func UpdateCrypto(c *fiber.Ctx) error {
+	userRefer := c.Params("user_refer")
+	name := c.Params("name")
 
 	type cryptoUpdate struct {
 		Amount uint `json:"amount"`
 	}
 	var update cryptoUpdate
-	err := json.NewDecoder(r.Body).Decode(&update)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
-		return
+	if err := c.BodyParser(&update); err != nil {
+		return c.Status(500).SendString(err.Error())
 	}
 
 	result := DB.Model(&crypto{}).
 		Where("user_refer = ? AND name = ?", userRefer, name).
 		Update("amount", update.Amount)
 	if result.Error != nil {
-		http.Error(w, result.Error.Error(), http.StatusInternalServerError)
-		return
+		return c.Status(500).SendString(result.Error.Error())
 	}
 	if result.RowsAffected == 0 {
-		http.Error(w, "crypto not found", http.StatusNotFound)
-		return
+		return c.Status(404).SendString("crypto not found")
 	}
 
 	var crypto crypto
-	DB.Where("user_refer = ? AND name = ?", userRefer, name).First(&crypto)
-	json.NewEncoder(w).Encode(crypto)
+	DB.Where("user_refer = ? AND name = ?", userRefer, name).
+		First(&crypto)
+	return c.JSON(&crypto)
 }
