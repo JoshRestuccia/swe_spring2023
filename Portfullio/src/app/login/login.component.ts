@@ -1,50 +1,50 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { Login } from '../Login';
-import loginsData from './logins.json';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { firstValueFrom } from 'rxjs';
 import { NgModule } from '@angular/core';
 
-interface Logins {
+interface IUserItem {
   username: String;
   password: String;
+  email: String;
 }
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
-export class LoginComponent {
-  // class Profile {
-  //   userName: string;
-  //   constructor(message: string) {
-  //     this.userName = message
-  //   }
-  // }
+export class LoginComponent implements OnInit {
+  public username = '';
+  public password = '';
+  public email = '';
+  public userItems: IUserItem[] = [];
 
-  checkoutForm = this.formBuilder.group({
-    username: '',
-    email:'',
-    password: '',
-  });
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(private httpClient: HttpClient) {}
 
-  onSubmit(): void {
-    console.warn('Login Successful!', this.checkoutForm.value);
-    this.checkoutForm.reset();
+  async ngOnInit() {
+    await this.loadUsers();
   }
 
-  public user: string = 'OliverP';
-  ngOnInit(): void {
-    fetch('localhost:3000/users/')
-      .then((response) => response.json())
-      .then((quotesData) => (this.user = quotesData));
+  async loadUsers() {
+    this.userItems = await firstValueFrom(
+      this.httpClient.get<IUserItem[]>('/api/users')
+    );
   }
-  login: Login = {
-    username: '',
-    password: '',
-  };
 
-  logins: Logins[] = loginsData;
+  async addUser() {
+    this.httpClient
+      .post<IUserItem>('/api/users', {
+        username: this.username,
+        password: this.password,
+        email: this.email,
+      })
+      .subscribe((response) => {
+        console.log(response);
+        this.loadUsers();
+      });
+    this.username = '';
+    this.password = '';
+    this.email = '';
+  }
 }
-// This entire component is to help the navigate the website to the login page
