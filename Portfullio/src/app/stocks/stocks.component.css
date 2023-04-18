@@ -1,0 +1,13 @@
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  color: darkgreen;
+}
+.center-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 160;
+  text-size-adjust: 50;
+}

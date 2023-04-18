@@ -10,12 +10,14 @@ import { MaterialModule } from './material/material.module';
 import { LoginComponent } from './login/login.component';
 import { MainpageComponent } from './mainpage/mainpage.component';
 import { UserhomeComponent } from './userhome/userhome.component';
+import { StocksComponent } from './stocks/stocks.component';
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     MainpageComponent,
     UserhomeComponent,
+    StocksComponent,
   ],
   imports: [
     BrowserModule,
