@@ -4,6 +4,7 @@
 <div class="center column flex">
   <div class="center flex column form">
     <div>Username:</div>
+    <!-- ngModel binds the input field to the username variable in login.component.ts -->
     <input [(ngModel)]="username" type="text" placeholder="Username" />
     <br />
     <div>Email:</div>
@@ -12,6 +13,7 @@
     <div>Password:</div>
     <input [(ngModel)]="password" type="text" placeholder="Password" />
     <br />
+    <!-- on button press, the addUser() using bound variables -->
     <button type="submit" (click)="addUser()">Login</button>
   </div>
   <br />
