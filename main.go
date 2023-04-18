@@ -12,40 +12,42 @@ func hello(c *fiber.Ctx) error {
 }
 
 func Routers(app *fiber.App) {
-	app.Get("/users", investments.GetUsers)
-	app.Get("/users/:id", investments.GetUser)
-	app.Get("/users/:id/stocks", investments.GetUsersStocks)
-	app.Get("users/:id/totalstocks", investments.GetUsersTotalStocks)
-	app.Get("users/:id/totalcash", investments.GetUsersTotalCash)
-	app.Get("users/:id/totalcrypto", investments.GetUsersTotalcrypto)
-	app.Get("users/:id/total", investments.GetUsersTotal)
+	api := app.Group("/api")
 
-	app.Post("/users", investments.SaveUser)
-	app.Delete("/users/:id", investments.DeleteUser)
-	app.Put("/users/:id", investments.UpdateUser)
+	api.Get("/users", investments.GetUsers)
+	api.Get("/users/:id", investments.GetUser)
+	api.Get("/users/:id/stocks", investments.GetUsersStocks)
+	api.Get("users/:id/totalstocks", investments.GetUsersTotalStocks)
+	api.Get("users/:id/totalcash", investments.GetUsersTotalCash)
+	api.Get("users/:id/totalcrypto", investments.GetUsersTotalcrypto)
+	api.Get("users/:id/total", investments.GetUsersTotal)
+
+	api.Post("/users", investments.SaveUser)
+	api.Delete("/users/:id", investments.DeleteUser)
+	api.Put("/users/:id", investments.UpdateUser)
 	//End of user routes
 
-	app.Get("/stocks/:user_refer", investments.GetStocks)
-	app.Get("/stocks/:user_refer/:symbol", investments.GetStock)
-	app.Post("/stocks/:user_refer", investments.SaveStock) //changed from "/stocks" to "stocks/:user_refer since it seems like we are storing stock-user pairs and we need the user_refer for that"
-	app.Delete("/stocks/:user_refer/:symbol", investments.DeleteStock)
-	app.Delete("/stocks/:user_refer", investments.DeleteStocks)
-	app.Put("/stocks/:user_refer/:symbol", investments.UpdateStock)
-	app.Put("/favorites/:user_refer/:symbol", investments.FavoriteStock)
-	app.Get("/favorites/:user_refer", investments.GetFavorites)
+	api.Get("/stocks/:user_refer", investments.GetStocks)
+	api.Get("/stocks/:user_refer/:symbol", investments.GetStock)
+	api.Post("/stocks/:user_refer", investments.SaveStock) //changed from "/stocks" to "stocks/:user_refer since it seems like we are storing stock-user pairs and we need the user_refer for that"
+	api.Delete("/stocks/:user_refer/:symbol", investments.DeleteStock)
+	api.Delete("/stocks/:user_refer", investments.DeleteStocks)
+	api.Put("/stocks/:user_refer/:symbol", investments.UpdateStock)
+	api.Put("/favorites/:user_refer/:symbol", investments.FavoriteStock)
+	api.Get("/favorites/:user_refer", investments.GetFavorites)
 	//End of stock routes
 
-	app.Get("/cash/:user_refer", investments.GetCashInvestments)
-	app.Post("/cash/:user_refer", investments.SaveCash)
-	app.Put("/cash/:user_refer/:currency", investments.UpdateCash)
-	app.Delete("/cash/:user_refer/:currency", investments.DeleteCash)
-	app.Get("/cash/:user_refer/:currency", investments.GetSingleCash)
+	api.Get("/cash/:user_refer", investments.GetCashInvestments)
+	api.Post("/cash/:user_refer", investments.SaveCash)
+	api.Put("/cash/:user_refer/:currency", investments.UpdateCash)
+	api.Delete("/cash/:user_refer/:currency", investments.DeleteCash)
+	api.Get("/cash/:user_refer/:currency", investments.GetSingleCash)
 
-	app.Get("/crypto/:user_refer", investments.GetCryptoInvestments)
-	app.Post("/crypto/:user_refer", investments.SaveCrypto)
-	app.Put("/crypto/:user_refer/:name", investments.UpdateCrypto)
-	app.Delete("/crypto/:user_refer/:name", investments.DeleteCrypto)
-	app.Get("/crypto/:user_refer/:name", investments.GetSingleCrypto)
+	api.Get("/crypto/:user_refer", investments.GetCryptoInvestments)
+	api.Post("/crypto/:user_refer", investments.SaveCrypto)
+	api.Put("/crypto/:user_refer/:name", investments.UpdateCrypto)
+	api.Delete("/crypto/:user_refer/:name", investments.DeleteCrypto)
+	api.Get("/crypto/:user_refer/:name", investments.GetSingleCrypto)
 }
 
 func main() {
@@ -63,6 +65,6 @@ func main() {
 	app.Get("/", hello)
 	Routers(app)
 
-	app.Listen(":3000")
+	app.Listen("0.0.0.0:3000")
 
 }
