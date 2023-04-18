@@ -9,6 +9,15 @@ For more information on installing Node.js, see
 
 https://nodejs.org/en
 
+Once node.js is installed, clone our respoitory in your folder of choice. Navigate to the "Portfullio"
+folder and run "npm install"
 
+![image](https://user-images.githubusercontent.com/100590185/232645800-468de23b-28f2-4689-8bcc-26917037e5f9.png)
+
+After all the node packages have been installed, run ng serve. This will get the localhost webapp running.
+Once the command is done running, there will be a localhost url that you can ctrl+click on to access.
+
+This will give allow you to see the app on the localhost url, so once you open it on your browser you are
+able to use our application.
 
 #### Members: Joshua Restuccia, Sean Cook, Oliver Peralta, and Carl-Frederic Theodate
