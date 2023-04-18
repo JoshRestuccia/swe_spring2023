@@ -1,48 +1,29 @@
 <!--This displays the main card that gives a short overview of what the project is-->
 <p></p>
 <h2 class="titleLogin">Login</h2>
-<div>
-  <form
-    class="center"
-    action="localhost:3000/users/"
-    method="POST"
-    contenttype=" "
-    [formGroup]="checkoutForm"
-    (ngSubmit)="onSubmit()"
-  >
-    <section>
-      <label for="username">Username: </label>
-      <input id="username" formControlName="username" placeholder="Username" />
-      <br />
-      <label for="email">Email:    </label>
-      <input id="email" formControlName="email" placeholder="Email" />
-      <br />
-      <label for="password">Password: </label>
-      <input
-        type="password"
-        id="name"
-        formControlName="password"
-        placeholder="Password"
-      />
-      <button type="submit">Login</button>
-    </section>
-  </form>
-
-  <h1 class="center">Display Data from Json File in Angular 9</h1>
-  <div class="center">
+<div class="center column flex">
+  <div class="center flex column form">
+    <div>Username:</div>
+    <input [(ngModel)]="username" type="text" placeholder="Username" />
+    <br />
+    <div>Email:</div>
+    <input [(ngModel)]="email" type="text" placeholder="Email" />
+    <br />
+    <div>Password:</div>
+    <input [(ngModel)]="password" type="text" placeholder="Password" />
+    <br />
+    <button type="submit" (click)="addUser()">Login</button>
+  </div>
+  <br />
+  <div class="center flex">
     <table class="table table-striped">
-      <thead>
-        <tr>
-          <th>Username</th>
-          <th>Password</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let login of logins">
-          <td>{{ login.username }}</td>
-          <td>{{ login.password }}</td>
-        </tr>
-      </tbody>
+      <div *ngFor="let userItem of userItems">
+        <div>{{ userItem.username }}</div>
+        <div>{{ userItem.email }}</div>
+        <div>{{ userItem.password }}</div>
+        <br />
+      </div>
+      <tbody></tbody>
     </table>
   </div>
 </div>
