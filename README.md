@@ -16,14 +16,18 @@ folder and run "npm install"
 ![image](https://user-images.githubusercontent.com/100590185/232645800-468de23b-28f2-4689-8bcc-26917037e5f9.png)
 
 On top of that, you will have to install highcharts, which is a library that we used to present charts like
-your portfolio's performance and your portfolio's distribution of assets.
+your portfolio's performance and distribution of assets.
 
 To install, run "npm install --save highcharts"
 
 ![image](https://user-images.githubusercontent.com/100590185/233131442-b2b17ef0-e632-42ea-aee5-abf5568370d6.png)
 
+After all the Node.js packages and highcharts library have been installed, run ng serve. 
 
-After all the node packages have been installed, run ng serve. This will get the localhost webapp running.
+![image](https://user-images.githubusercontent.com/100590185/233132338-c76dffbb-f2de-4af7-bb5a-4e4634e2d5bf.png)
+
+Make sure you are in the "Portfullio" directory. This will get the localhost webapp running.
+
 Once the command is done running, there will be a localhost url that you can ctrl+click on to access or
 copy into your browser.
 
