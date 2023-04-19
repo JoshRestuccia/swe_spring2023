@@ -38,5 +38,7 @@ able to use our application.
 
 ![image](https://user-images.githubusercontent.com/100590185/232650355-c64d1d10-ce92-448d-82b3-3d1fc562720b.png)
 
+Thank you for reaching this far if you got to see the web app we made, we hope you enjoy looking around. 
+Reach out to us for any questions or advice that you may have for us.
 
 #### Members: Joshua Restuccia, Sean Cook, Oliver Peralta, and Carl-Frederic Theodate
