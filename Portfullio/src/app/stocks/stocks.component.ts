@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Chart } from 'angular-highcharts';
+import { MatCardModule } from '@angular/material/card';
 @Component({
   selector: 'app-stocks',
   templateUrl: './stocks.component.html',
