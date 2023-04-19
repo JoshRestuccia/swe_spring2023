@@ -26,6 +26,12 @@ describe("Hyperlink Test", () => {
   });
 });
 
+describe("The Login Page", () => {
+  it("successfully loads", () => {
+    cy.visit("http://localhost:4200/login");
+  });
+});
+
 describe("Box Test", () => {
   it("Tests Typing Into Boxes", () => {
     cy.visit("http://localhost:4200");
@@ -39,8 +45,11 @@ describe("Box Test", () => {
     cy.get("input").eq(0).type("email@com.com");
     cy.get("input").eq(0).should("have.value", "email@com.com");
 
-    cy.get("input").eq(1).type("password");
-    cy.get("input").eq(1).should("have.value", "password");
+    cy.get("input").eq(1).type("username");
+    cy.get("input").eq(1).should("have.value", "username");
+
+    cy.get("input").eq(2).type("password");
+    cy.get("input").eq(2).should("have.value", "password");
   });
 });
 
@@ -61,5 +70,11 @@ describe("Settings Button Check", () => {
 
     cy.get("button").click();
     cy.contains("Settings").click();
+  });
+});
+
+describe("The Stocks Page", () => {
+  it("successfully loads", () => {
+    cy.visit("http://localhost:4200/stocks");
   });
 });
