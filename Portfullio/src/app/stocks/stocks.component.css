@@ -9,7 +9,19 @@
   justify-content: center;
   align-items: center;
 }
-.container {
+.charts {
+  display: flex;
+  margin: 40 px;
+}
+.line {
+  flex: 1;
+  box-shadow: 10px 10px 5px #aaaaaa;
+}
+.pie {
+  flex: 1;
+  box-shadow: 10px 10px 5px #aaaaaa;
+}
+#container {
   height: 400px;
   min-width: 310px;
 }

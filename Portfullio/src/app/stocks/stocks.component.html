@@ -4,4 +4,15 @@
   </mat-card>
 </p>
 
-<div class="line" [chart]="lineChart"></div>
+<div class="charts">
+  <div class="line" [chart]="lineChart"></div>
+  <div class="pie" [chart]="pieChart"></div>
+</div>
+
+<script src="https://code.highcharts.com/stock/highstock.js"></script>
+<script src="https://code.highcharts.com/stock/modules/data.js"></script>
+<script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/stock/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/stock/modules/accessibility.js"></script>
+
+<div id="container"></div>
