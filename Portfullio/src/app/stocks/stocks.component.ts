@@ -67,7 +67,7 @@ export class StocksComponent {
           { name: 'Real Estate', y: 10.2, color: 'red' },
           { name: 'Cryptocurrency', y: 14.2, color: 'orange' },
           { name: 'Bonds', y: 5.8, color: 'green' },
-          { name: 'Retirement', y: 29.48, color: 'yellow' },
+          { name: '401k', y: 29.48, color: 'yellow' },
         ],
       },
     ],
