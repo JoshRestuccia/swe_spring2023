@@ -11,6 +11,8 @@ import { LoginComponent } from './login/login.component';
 import { MainpageComponent } from './mainpage/mainpage.component';
 import { UserhomeComponent } from './userhome/userhome.component';
 import { StocksComponent } from './stocks/stocks.component';
+import { ChartModule } from 'angular-highcharts';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,6 +29,7 @@ import { StocksComponent } from './stocks/stocks.component';
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
+    ChartModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

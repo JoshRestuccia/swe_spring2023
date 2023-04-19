@@ -8,6 +8,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 160;
-  text-size-adjust: 50;
+}
+.container {
+  height: 400px;
+  min-width: 310px;
 }
