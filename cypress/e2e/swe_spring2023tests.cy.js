@@ -78,3 +78,12 @@ describe("The Stocks Page", () => {
     cy.visit("http://localhost:4200/stocks");
   });
 });
+
+describe("Charts Test", () => {
+  it("tests charts", () => {
+    cy.visit("http://localhost:4200/stocks");
+
+    cy.get("div").eq(1).should("be.visible");
+    cy.get("div").eq(3).should("be.visible");
+  });
+});
