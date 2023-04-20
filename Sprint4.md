@@ -15,3 +15,15 @@ allowing for storage of user's data.
 Tests were also done on the components of the front end like the separate pages that were made to see the charts, login, and homepage.
 These were done by ng test and most of them failed because of the mat-toolbar and mat-card not being recognized, although the correct
 declarations were made.
+
+Unit tests done:
+
+LoginComponent
+
+MainpageComponent
+
+StocksComponent
+
+AppComponent
+
+UserHome Component
