@@ -9,6 +9,40 @@
   <div class="pie" [chart]="pieChart"></div>
 </div>
 
+<div class="display">
+  <div class="column form" style="margin-left: 10px">
+    <br />
+    <br />
+    <div>Symbol:</div>
+    <!-- ngModel binds the input field to the username variable in login.component.ts -->
+    <input [(ngModel)]="symbol" type="text" placeholder="Symbol" />
+    <br />
+    <div>Name:</div>
+    <input [(ngModel)]="name" type="text" placeholder="Name" />
+    <br />
+    <div>Price:</div>
+    <input [(ngModel)]="price" type="text" placeholder="Price" />
+    <br />
+    <div>Quantity:</div>
+    <input [(ngModel)]="quantity" type="text" placeholder="Quantity" />
+    <br />
+    <!-- on button press, the addUser() using bound variables -->
+    <button type="submit" (click)="addStock()">Add Stock</button>
+  </div>
+  <div class="stock-grid">
+    <div class="stock-display-header">
+      <div>Symbol</div>
+      <div>Price</div>
+      <div>Quantity</div>
+    </div>
+    <div class="stock-item" *ngFor="let stockItem of stockItems">
+      <div>{{ stockItem.symbol }}</div>
+      <div>${{ stockItem.price }}</div>
+      <div>{{ stockItem.quantity }}</div>
+    </div>
+  </div>
+</div>
+
 <script src="https://code.highcharts.com/stock/highstock.js"></script>
 <script src="https://code.highcharts.com/stock/modules/data.js"></script>
 <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
