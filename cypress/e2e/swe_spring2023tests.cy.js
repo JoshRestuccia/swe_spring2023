@@ -83,7 +83,11 @@ describe("Charts Test", () => {
   it("tests charts", () => {
     cy.visit("http://localhost:4200/stocks");
 
-    cy.get("div").eq(1).should("be.visible");
+    cy.get("div")
+      .eq(1)
+      .should("be.visible")
+      .find("g.data-0 rect")
+      .should("have.length", 11);
     cy.get("div").eq(3).should("be.visible");
   });
 });

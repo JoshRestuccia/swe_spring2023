@@ -37,6 +37,9 @@ export class StocksComponent {
     chart: {
       type: 'pie',
     },
+    title: {
+      text: 'Portfolio Distribution',
+    },
     tooltip: {
       pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>',
     },
