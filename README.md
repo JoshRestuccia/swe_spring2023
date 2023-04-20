@@ -41,4 +41,18 @@ able to use our application.
 Thank you for reaching this far if you got to see the web app we made, we hope you enjoy looking around. 
 Reach out to us for any questions or advice that you may have for us.
 
+# Running Backend
+
+## Install MYSQL
+
+https://www.mysql.com/
+
+Install mysql and create a database under the admin account
+
+Navigate to the root folder and run the command
+
+![image](https://user-images.githubusercontent.com/31039632/233249888-e54e23fc-16bc-4f98-b017-bb9d1584a101.png)
+
+This will start the database running and popuate the MySQL database with the correct schemas and be able to receive requests from the front-end
+
 #### Members: Joshua Restuccia, Sean Cook, Oliver Peralta, and Carl-Frederic Theodate
