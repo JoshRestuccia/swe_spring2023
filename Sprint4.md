@@ -2,6 +2,8 @@
 
 Updated backend to cryptocurrency objects and updated the documentation accordingly
 
+Performed tests using Postman to send http requests and see changes in the database
+
 Documentation: https://documenter.getpostman.com/view/25705725/2s93Y2T2Tq
 
 ### Frontend
