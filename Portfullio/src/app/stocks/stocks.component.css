@@ -9,6 +9,33 @@
   justify-content: center;
   align-items: center;
 }
+.display {
+  display: flex;
+  flex-direction: row;
+  margin-top: 20px;
+  align-items: flex-start;
+}
+.stock-grid {
+  flex-direction: row;
+  align-items: flex-start;
+  margin-left: 30px;
+  width: 600px;
+}
+.stock-display-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  border: 2px solid black;
+}
+.stock-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  border: 2px solid black;
+}
+.flex {
+  display: flex;
+}
 .charts {
   display: flex;
   margin: 40 px;
