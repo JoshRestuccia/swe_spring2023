@@ -1,3 +1,9 @@
+### VIDEO LINKS:
+
+Part1: https://youtu.be/j0etGloAgTc
+
+Part 2: https://youtu.be/RW3JMleLJ5Q
+
 ### Backend
 
 Updated backend to cryptocurrency objects and updated the documentation accordingly
@@ -12,8 +18,7 @@ On the front end, we decided to start working on the charts that would present d
 and it's performance overall.
 
 Along with that, front end was able to submit a form through the login that would sent the username, password, and email to the backend,
-allowing for storage of user's data. On the stocks page, there was also a similar functionality that allowed you to store stocks at a
-certain price and quantity on the backend. This only works when the backend is running.
+allowing for storage of user's data.
 
 Tests were also done on the components of the front end like the separate pages that were made to see the charts, login, and homepage.
 These were done by ng test and most of them failed because of the mat-toolbar and mat-card not being recognized, although the correct
@@ -30,3 +35,13 @@ StocksComponent
 AppComponent
 
 UserHome Component
+
+Cypress tests done:
+
+Loading of all 3 webpages
+
+Functionality of the hyperlinks to reach all the webpages
+
+Checking the functionality of buttons
+
+Testing the stock charts properly load
