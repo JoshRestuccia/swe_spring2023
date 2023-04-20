@@ -12,7 +12,8 @@ On the front end, we decided to start working on the charts that would present d
 and it's performance overall.
 
 Along with that, front end was able to submit a form through the login that would sent the username, password, and email to the backend,
-allowing for storage of user's data.
+allowing for storage of user's data. On the stocks page, there was also a similar functionality that allowed you to store stocks at a
+certain price and quantity on the backend. This only works when the backend is running.
 
 Tests were also done on the components of the front end like the separate pages that were made to see the charts, login, and homepage.
 These were done by ng test and most of them failed because of the mat-toolbar and mat-card not being recognized, although the correct
