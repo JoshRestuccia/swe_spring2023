@@ -24,7 +24,7 @@ Tests were also done on the components of the front end like the separate pages 
 These were done by ng test and most of them failed because of the mat-toolbar and mat-card not being recognized, although the correct
 declarations were made.
 
-Unit tests done:
+### Unit tests done:
 
 LoginComponent
 
@@ -36,7 +36,7 @@ AppComponent
 
 UserHome Component
 
-Cypress tests done:
+### Cypress tests done:
 
 Loading of all 3 webpages
 
