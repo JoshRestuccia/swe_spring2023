@@ -1,4 +1,9 @@
 ### Backend
+
+Updated backend to cryptocurrency objects and updated the documentation accordingly
+
+Documentation: https://documenter.getpostman.com/view/25705725/2s93Y2T2Tq
+
 ### Frontend
 
 On the front end, we decided to start working on the charts that would present data like the distribution of assets in a user's portfolio
